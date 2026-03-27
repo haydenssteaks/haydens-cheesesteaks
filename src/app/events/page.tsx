@@ -1,37 +1,21 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
+import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
   title: "Events | Hayden's Authentic Cheesesteaks",
   description: "Find our upcoming pop-up events and pre-order your authentic cheesesteak for pickup.",
 };
 
-// Placeholder event data until Supabase is connected
-const SAMPLE_EVENTS = [
-  {
-    id: "1",
-    venue_name: "Brunswick Bierworks",
-    venue_address: "Brunswick Ave, Toronto",
-    event_date: "2026-04-12",
-    start_time: "11:30",
-    end_time: "17:00",
-    description: "Join us for authentic cheesesteaks at Brunswick Bierworks! Pre-orders recommended as we sell out fast.",
-    orders_open: true,
-  },
-  {
-    id: "2",
-    venue_name: "Rainhard Brewing",
-    venue_address: "100 Symes Rd, Toronto",
-    event_date: "2026-04-26",
-    start_time: "12:00",
-    end_time: "17:00",
-    description: "We're bringing Philly to the Junction! Pre-order your cheesesteak for guaranteed pickup.",
-    orders_open: false,
-  },
-];
+export default async function EventsPage() {
+  const supabase = await createClient();
+  const { data: events } = await supabase
+    .from("events")
+    .select("id, venue_name, venue_address, event_date, start_time, end_time, description, orders_open")
+    .eq("is_published", true)
+    .order("event_date", { ascending: true });
 
-export default function EventsPage() {
   return (
     <>
       {/* Hero */}
@@ -67,7 +51,12 @@ export default function EventsPage() {
       <section className="py-20 md:py-28 bg-cream">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <div className="space-y-5">
-            {SAMPLE_EVENTS.map((event) => {
+            {!events?.length && (
+              <div className="bg-white rounded-2xl p-12 text-center shadow-sm">
+                <p className="text-charcoal/40 text-sm">No upcoming events scheduled. Check back soon!</p>
+              </div>
+            )}
+            {(events ?? []).map((event) => {
               const eventDate = new Date(event.event_date + "T12:00:00");
 
               return (

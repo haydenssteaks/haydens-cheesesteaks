@@ -31,8 +31,7 @@ CREATE TABLE events (
   end_time TIME NOT NULL,
   description TEXT,
   image_url TEXT,
-  preorder_opens_at TIMESTAMPTZ NOT NULL,
-  preorder_closes_at TIMESTAMPTZ NOT NULL,
+  orders_open BOOLEAN DEFAULT FALSE,
   max_orders INTEGER,
   is_published BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMPTZ DEFAULT NOW()
@@ -50,7 +49,6 @@ CREATE TABLE orders (
   tax_cents INTEGER NOT NULL DEFAULT 0,
   total_cents INTEGER NOT NULL,
   square_payment_id TEXT,
-  square_order_id TEXT,
   notes TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()

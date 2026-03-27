@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { submitCateringInquiry } from "@/lib/actions";
 
 export default function CateringPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -9,10 +10,14 @@ export default function CateringPage() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setSubmitting(true);
-    // TODO: Connect to Supabase to store inquiry
-    await new Promise((r) => setTimeout(r, 1000));
-    setSubmitted(true);
-    setSubmitting(false);
+    try {
+      await submitCateringInquiry(new FormData(e.currentTarget));
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Catering inquiry error:", err);
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (submitted) {

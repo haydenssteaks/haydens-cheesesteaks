@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import SquarePaymentForm from "@/components/SquarePaymentForm";
+import { createOrder } from "@/lib/actions";
 
 const MENU_ITEMS = [
   {
@@ -49,6 +50,19 @@ export default function OrderPage() {
         });
         const data = await res.json();
         if (data.success) {
+          await createOrder({
+            eventId: params.eventId as string,
+            customerName,
+            customerEmail,
+            customerPhone,
+            notes,
+            totalCents: total,
+            squarePaymentId: data.paymentId,
+            items: Object.entries(quantities).map(([id, qty]) => {
+              const item = MENU_ITEMS.find((m) => m.id === id)!;
+              return { id, name: item.name, quantity: qty, priceCents: item.price };
+            }),
+          });
           setStep("confirmation");
         } else {
           setPaymentError(data.error || "Payment failed. Please try again.");
@@ -58,7 +72,7 @@ export default function OrderPage() {
       }
       setProcessing(false);
     },
-    [customerName, customerEmail, params.eventId]
+    [customerName, customerEmail, customerPhone, notes, quantities, params.eventId]
   );
 
   const total = Object.entries(quantities).reduce((sum, [id, qty]) => {
