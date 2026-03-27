@@ -6,18 +6,36 @@ import { submitCateringInquiry } from "@/lib/actions";
 export default function CateringPage() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setSubmitting(true);
+    setError("");
+
+    const form = new FormData(e.currentTarget);
+
     try {
-      await submitCateringInquiry(new FormData(e.currentTarget));
+      await submitCateringInquiry({
+        contact_name: form.get("contact_name") as string,
+        contact_email: form.get("contact_email") as string,
+        contact_phone: (form.get("contact_phone") as string) || undefined,
+        event_name: form.get("event_name") as string,
+        approximate_order_size: form.get("approximate_order_size") as string,
+        event_date: (form.get("event_date") as string) || undefined,
+        event_time: (form.get("event_time") as string) || undefined,
+        event_location: (form.get("event_location") as string) || undefined,
+        message: (form.get("message") as string) || undefined,
+      });
       setSubmitted(true);
     } catch (err) {
-      console.error("Catering inquiry error:", err);
-    } finally {
-      setSubmitting(false);
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again."
+      );
     }
+    setSubmitting(false);
   }
 
   if (submitted) {
@@ -76,6 +94,11 @@ export default function CateringPage() {
             <h2 className="font-display text-2xl font-bold text-teal mb-8">
               Inquiry Details
             </h2>
+            {error && (
+              <div className="bg-red-50 text-red-600 text-sm rounded-xl p-3 mb-6">
+                {error}
+              </div>
+            )}
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
