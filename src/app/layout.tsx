@@ -6,11 +6,11 @@ import Footer from "@/components/layout/Footer";
 export const metadata: Metadata = {
   title: "Hayden's Authentic Cheesesteaks",
   description:
-    "Toronto's authentic Philly-style cheesesteaks. Pre-order for our upcoming pop-up events or inquire about catering.",
+    "Toronto's authentic Philly-style cheesesteaks. Order online for pickup at our next pop-up event.",
   openGraph: {
     title: "Hayden's Authentic Cheesesteaks",
     description:
-      "Toronto's authentic Philly-style cheesesteaks. Pre-order for our upcoming pop-up events.",
+      "Toronto's authentic Philly-style cheesesteaks. Order online for pickup at our next pop-up event.",
     type: "website",
     url: "https://haydenscheesesteaks.com",
   },

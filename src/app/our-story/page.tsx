@@ -32,11 +32,11 @@ export default function OurStoryPage() {
           {/* Logo image */}
           <div className="flex justify-center mb-14">
             <Image
-              src="/images/page-07-event-poster.png"
+              src="/logo-icon.png"
               alt="Hayden's Authentic Cheesesteaks"
-              width={360}
-              height={360}
-              className="w-64 md:w-72"
+              width={224}
+              height={224}
+              className="w-48 md:w-56"
             />
           </div>
 
@@ -80,10 +80,10 @@ export default function OurStoryPage() {
 
           <div className="text-center">
             <Link
-              href="/events"
+              href="/order"
               className="inline-block bg-teal text-cream px-8 py-3.5 rounded-full font-semibold text-sm tracking-wide hover:bg-teal-dark transition-colors duration-200"
             >
-              See Upcoming Events
+              Order Now
             </Link>
           </div>
         </div>

@@ -13,6 +13,8 @@ const MENU_ITEM = {
   price: 2300,
 };
 
+const PEPPERS_PRICE = 100;
+
 export default function OrderPage() {
   const [ordersOpen, setOrdersOpen] = useState<boolean | null>(null);
   const [quantity, setQuantity] = useState(1);
@@ -21,6 +23,7 @@ export default function OrderPage() {
   const [customerPhone, setCustomerPhone] = useState("");
   const [notes, setNotes] = useState("");
   const [step, setStep] = useState<"build" | "checkout" | "confirmation">("build");
+  const [addPeppers, setAddPeppers] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [paymentError, setPaymentError] = useState("");
 
@@ -34,7 +37,7 @@ export default function OrderPage() {
       .then(({ data }) => setOrdersOpen(data?.value === "true"));
   }, []);
 
-  const total = MENU_ITEM.price * quantity;
+  const total = MENU_ITEM.price * quantity + (addPeppers ? PEPPERS_PRICE : 0);
 
   const handlePaymentError = useCallback((error: string) => {
     setPaymentError(error);
@@ -66,7 +69,10 @@ export default function OrderPage() {
             notes,
             totalCents: total,
             squarePaymentId: data.paymentId,
-            items: [{ id: MENU_ITEM.id, name: MENU_ITEM.name, quantity, priceCents: MENU_ITEM.price }],
+            items: [
+              { id: MENU_ITEM.id, name: MENU_ITEM.name, quantity, priceCents: MENU_ITEM.price },
+              ...(addPeppers ? [{ id: "peppers", name: "Pickled Hot Peppers", quantity: 1, priceCents: PEPPERS_PRICE }] : []),
+            ],
           });
           setStep("confirmation");
         } else {
@@ -77,7 +83,7 @@ export default function OrderPage() {
       }
       setProcessing(false);
     },
-    [customerName, customerEmail, customerPhone, notes, quantity, total]
+    [customerName, customerEmail, customerPhone, notes, quantity, total, addPeppers]
   );
 
   // Loading
@@ -139,7 +145,7 @@ export default function OrderPage() {
             <div className="bg-white rounded-2xl p-8 shadow-sm mb-6">
               <p className="text-xs text-charcoal/40 uppercase tracking-widest mb-3">Order Total</p>
               <p className="font-display text-4xl font-bold text-teal">${(total / 100).toFixed(2)}</p>
-              <p className="text-sm text-charcoal/50 mt-3">{quantity} × Cheesesteak</p>
+              <p className="text-sm text-charcoal/50 mt-3">{quantity} × Cheesesteak{addPeppers ? " + Pickled Hot Peppers" : ""}</p>
             </div>
             <Link
               href="/"
@@ -192,6 +198,23 @@ export default function OrderPage() {
                 </div>
               </div>
 
+              {/* Peppers add-on */}
+              <div className="bg-white rounded-2xl p-6 shadow-sm mb-4 flex items-center justify-between gap-4">
+                <div>
+                  <h3 className="font-display font-bold text-charcoal text-lg">Pickled Hot Peppers</h3>
+                  <p className="text-charcoal/50 text-sm mt-0.5">House pickled jalapeños &amp; cherry peppers</p>
+                  <p className="text-teal font-bold mt-1">+$1.00</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setAddPeppers((p) => !p)}
+                  className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors duration-200 ${addPeppers ? "bg-teal" : "bg-charcoal/20"}`}
+                  aria-label={addPeppers ? "Remove pickled hot peppers" : "Add pickled hot peppers"}
+                >
+                  <span className={`inline-block h-4 w-4 rounded-full bg-white shadow transition-transform duration-200 ${addPeppers ? "translate-x-6" : "translate-x-1"}`} />
+                </button>
+              </div>
+
               {/* Notes */}
               <div className="bg-white rounded-2xl p-6 shadow-sm mb-4">
                 <label className="block text-xs font-semibold text-charcoal/40 uppercase tracking-wider mb-2">
@@ -229,8 +252,14 @@ export default function OrderPage() {
                 <h3 className="font-display font-bold text-charcoal text-lg mb-4">Order Summary</h3>
                 <div className="flex justify-between text-sm py-2.5 border-b border-cream-dark">
                   <span className="text-charcoal/70">{quantity}× Cheesesteak</span>
-                  <span className="font-semibold text-charcoal">${(total / 100).toFixed(2)}</span>
+                  <span className="font-semibold text-charcoal">${((MENU_ITEM.price * quantity) / 100).toFixed(2)}</span>
                 </div>
+                {addPeppers && (
+                  <div className="flex justify-between text-sm py-2.5 border-b border-cream-dark">
+                    <span className="text-charcoal/70">Pickled Hot Peppers</span>
+                    <span className="font-semibold text-charcoal">$1.00</span>
+                  </div>
+                )}
                 <div className="flex justify-between text-lg font-bold text-teal pt-3 mt-1">
                   <span>Total</span>
                   <span>${(total / 100).toFixed(2)}</span>

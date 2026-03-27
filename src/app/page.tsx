@@ -35,16 +35,14 @@ export default function Home() {
               </div>
             </div>
             <div className="flex justify-center md:justify-end">
-              <div className="relative w-72 md:w-80 lg:w-96">
-                <Image
-                  src="/images/page-12.png"
-                  alt="Hayden's Cheesesteak — $23"
-                  width={400}
-                  height={400}
-                  className="w-full rounded-2xl shadow-2xl shadow-teal-dark/40"
-                  priority
-                />
-              </div>
+              <Image
+                src="/logo-icon-white.png"
+                alt="Hayden's Authentic Cheesesteaks"
+                width={320}
+                height={320}
+                className="w-56 md:w-72 lg:w-80 opacity-90 drop-shadow-2xl"
+                priority
+              />
             </div>
           </div>
         </div>
@@ -65,9 +63,9 @@ export default function Home() {
             {[
               {
                 step: "01",
-                title: "Check Events",
+                title: "Browse the Menu",
                 description:
-                  "Browse our upcoming pop-up events at restaurants and breweries across Toronto.",
+                  "See what we're serving. One sandwich, perfected — no compromises, no modifications.",
                 icon: (
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
@@ -76,9 +74,9 @@ export default function Home() {
               },
               {
                 step: "02",
-                title: "Pre-Order",
+                title: "Place Your Order",
                 description:
-                  "Place your order online when ordering is open. We'll have it ready for pickup at the event.",
+                  "Order online when ordering is open. We'll have yours ready at the event.",
                 icon: (
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
@@ -130,13 +128,15 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div className="flex justify-center">
-              <Image
-                src="/images/page-11.png"
-                alt="Hayden's — Pop-up event"
-                width={480}
-                height={480}
-                className="w-full max-w-sm rounded-2xl shadow-sm"
-              />
+              <div className="w-72 h-72 rounded-full bg-teal/8 flex items-center justify-center mx-auto">
+                <Image
+                  src="/logo-icon.png"
+                  alt="Hayden's Authentic Cheesesteaks"
+                  width={192}
+                  height={192}
+                  className="w-48"
+                />
+              </div>
             </div>
             <div>
               <p className="text-gold text-xs font-semibold uppercase tracking-widest mb-4">
@@ -203,13 +203,15 @@ export default function Home() {
               </div>
             </div>
             <div className="flex justify-center md:justify-end">
-              <Image
-                src="/images/page-12.png"
-                alt="Cheesesteak — $23"
-                width={400}
-                height={400}
-                className="w-full max-w-xs rounded-2xl shadow-sm"
-              />
+              <div className="w-64 h-64 rounded-full bg-teal/8 flex items-center justify-center">
+                <Image
+                  src="/logo-icon.png"
+                  alt="Hayden's Authentic Cheesesteaks"
+                  width={160}
+                  height={160}
+                  className="w-40"
+                />
+              </div>
             </div>
           </div>
         </div>
