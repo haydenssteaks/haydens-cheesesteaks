@@ -17,15 +17,15 @@ export default function Header() {
   return (
     <header className="bg-cream border-b border-cream-dark sticky top-0 z-50">
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-20 items-center justify-between">
+        <div className="flex h-18 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3">
+          <Link href="/" className="flex items-center shrink-0">
             <Image
               src="/logo-full.png"
               alt="Hayden's Authentic Cheesesteaks"
               width={160}
               height={60}
-              className="h-14 w-auto"
+              className="h-12 w-auto"
               priority
             />
           </Link>
@@ -36,14 +36,15 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium tracking-wide uppercase text-charcoal hover:text-teal transition-colors"
+                className="text-sm font-medium text-charcoal/70 hover:text-teal transition-colors duration-200 relative group"
               >
                 {link.label}
+                <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-teal transition-all duration-200 group-hover:w-full" />
               </Link>
             ))}
             <Link
               href="/events"
-              className="bg-teal text-cream px-5 py-2.5 rounded-full text-sm font-semibold tracking-wide uppercase hover:bg-teal-dark transition-colors"
+              className="bg-teal text-cream px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide hover:bg-teal-dark transition-colors duration-200 shrink-0"
             >
               Pre-Order
             </Link>
@@ -52,15 +53,15 @@ export default function Header() {
           {/* Mobile menu button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-charcoal"
+            className="md:hidden p-2 -mr-2 text-charcoal/70 hover:text-charcoal transition-colors"
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? (
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             ) : (
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
               </svg>
             )}
@@ -69,25 +70,27 @@ export default function Header() {
 
         {/* Mobile Nav */}
         {mobileMenuOpen && (
-          <div className="md:hidden pb-6 border-t border-cream-dark pt-4">
-            <div className="flex flex-col gap-4">
+          <div className="md:hidden border-t border-cream-dark py-5">
+            <div className="flex flex-col gap-1">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-base font-medium text-charcoal hover:text-teal transition-colors"
+                  className="text-base font-medium text-charcoal/80 hover:text-teal transition-colors py-2"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {link.label}
                 </Link>
               ))}
-              <Link
-                href="/events"
-                className="bg-teal text-cream px-5 py-2.5 rounded-full text-sm font-semibold tracking-wide uppercase hover:bg-teal-dark transition-colors text-center mt-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Pre-Order
-              </Link>
+              <div className="pt-3 mt-1 border-t border-cream-dark">
+                <Link
+                  href="/events"
+                  className="inline-block bg-teal text-cream px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide hover:bg-teal-dark transition-colors text-center"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Pre-Order
+                </Link>
+              </div>
             </div>
           </div>
         )}
