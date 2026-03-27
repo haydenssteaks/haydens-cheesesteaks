@@ -11,55 +11,25 @@ export const metadata: Metadata = {
 const SAMPLE_EVENTS = [
   {
     id: "1",
-    name: "Pop-Up at Brunswick Bierworks",
     venue_name: "Brunswick Bierworks",
     venue_address: "Brunswick Ave, Toronto",
     event_date: "2026-04-12",
     start_time: "11:30",
     end_time: "17:00",
     description: "Join us for authentic cheesesteaks at Brunswick Bierworks! Pre-orders recommended as we sell out fast.",
-    preorder_opens_at: "2026-03-29T00:00:00",
-    preorder_closes_at: "2026-04-08T23:59:59",
+    orders_open: true,
   },
   {
     id: "2",
-    name: "Pop-Up at Rainhard Brewing",
     venue_name: "Rainhard Brewing",
     venue_address: "100 Symes Rd, Toronto",
     event_date: "2026-04-26",
     start_time: "12:00",
     end_time: "17:00",
     description: "We're bringing Philly to the Junction! Pre-order your cheesesteak for guaranteed pickup.",
-    preorder_opens_at: "2026-04-12T00:00:00",
-    preorder_closes_at: "2026-04-22T23:59:59",
+    orders_open: false,
   },
 ];
-
-function getPreorderStatus(opensAt: string, closesAt: string) {
-  const now = new Date();
-  const opens = new Date(opensAt);
-  const closes = new Date(closesAt);
-
-  if (now < opens) {
-    return {
-      label: `Opens ${opens.toLocaleDateString("en-US", { month: "short", day: "numeric" })}`,
-      color: "bg-charcoal/8 text-charcoal/50",
-      canOrder: false,
-    };
-  }
-  if (now <= closes) {
-    return {
-      label: "Pre-Orders Open",
-      color: "bg-teal/10 text-teal",
-      canOrder: true,
-    };
-  }
-  return {
-    label: "Pre-Orders Closed",
-    color: "bg-red-50 text-red-500",
-    canOrder: false,
-  };
-}
 
 export default function EventsPage() {
   return (
@@ -98,10 +68,6 @@ export default function EventsPage() {
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <div className="space-y-5">
             {SAMPLE_EVENTS.map((event) => {
-              const status = getPreorderStatus(
-                event.preorder_opens_at,
-                event.preorder_closes_at
-              );
               const eventDate = new Date(event.event_date + "T12:00:00");
 
               return (
@@ -113,9 +79,9 @@ export default function EventsPage() {
                     {/* Date + Status row */}
                     <div className="flex items-start justify-between gap-4 mb-5">
                       <span
-                        className={`inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider ${status.color}`}
+                        className={`inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider ${event.orders_open ? "bg-teal/10 text-teal" : "bg-charcoal/8 text-charcoal/50"}`}
                       >
-                        {status.label}
+                        {event.orders_open ? "Orders Open" : "Orders Closed"}
                       </span>
                       <div className="text-right shrink-0">
                         <div className="font-display text-2xl font-bold text-teal leading-none">
@@ -150,7 +116,7 @@ export default function EventsPage() {
                         <svg className="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        {event.start_time} – {event.end_time} (or sold out)
+                        {event.start_time} – {event.end_time}
                       </span>
                     </div>
 
@@ -158,18 +124,16 @@ export default function EventsPage() {
                       {event.description}
                     </p>
 
-                    {status.canOrder ? (
+                    {event.orders_open ? (
                       <Link
                         href={`/order/${event.id}`}
                         className="inline-block bg-teal text-cream px-7 py-3 rounded-full font-semibold text-sm tracking-wide hover:bg-teal-dark transition-colors duration-200"
                       >
-                        Pre-Order Now
+                        Order Now
                       </Link>
                     ) : (
                       <p className="text-charcoal/35 text-sm">
-                        {status.label === "Pre-Orders Closed"
-                          ? "Walk-ups welcome at the event."
-                          : "Pre-orders not yet available."}
+                        Orders are currently closed for this event.
                       </p>
                     )}
                   </div>
