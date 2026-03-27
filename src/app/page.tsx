@@ -4,45 +4,49 @@ import Link from "next/link";
 export default function Home() {
   return (
     <>
-      {/* Hero */}
-      <section className="bg-teal overflow-hidden">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 md:py-28 lg:py-32">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <div className="text-center md:text-left">
-              <p className="text-gold-light text-xs font-semibold uppercase tracking-widest mb-6">
-                Toronto &middot; Philly-Style
-              </p>
-              <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-cream leading-[1.05] mb-5">
-                Authentic<br />
-                Cheesesteaks.
-              </h1>
-              <p className="font-display text-xl md:text-2xl text-cream/70 italic mb-10 leading-snug">
-                &ldquo;What more do you want?&rdquo;
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
-                <Link
-                  href="/order"
-                  className="bg-cream text-teal px-8 py-3.5 rounded-full font-semibold text-sm tracking-wide hover:bg-white transition-colors duration-200 text-center"
-                >
-                  Order Now
-                </Link>
-                <Link
-                  href="/catering"
-                  className="border border-cream/30 text-cream px-8 py-3.5 rounded-full font-semibold text-sm tracking-wide hover:bg-cream/10 transition-colors duration-200 text-center"
-                >
-                  Catering Inquiries
-                </Link>
-              </div>
-            </div>
-            <div className="flex justify-center md:justify-end">
+      {/* Hero — Full-bleed food photography with overlay */}
+      <section className="relative min-h-[85vh] md:min-h-[90vh] flex items-center overflow-hidden">
+        <Image
+          src="/images/hero-cheesesteak.jpg"
+          alt="Loaded Philly-style cheesesteaks from Hayden's"
+          fill
+          className="object-cover"
+          priority
+          sizes="100vw"
+        />
+        <div className="hero-gradient absolute inset-0" />
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 w-full">
+          <div className="max-w-2xl">
+            <div className="mb-8">
               <Image
-                src="/logo-icon-white.png"
+                src="/images/logo-full-text.jpg"
                 alt="Hayden's Authentic Cheesesteaks"
-                width={320}
-                height={320}
-                className="w-56 md:w-72 lg:w-80 opacity-90 drop-shadow-2xl"
+                width={280}
+                height={140}
+                className="w-48 md:w-64 lg:w-72 brightness-0 invert opacity-95"
                 priority
               />
+            </div>
+            <p className="font-display text-xl md:text-2xl lg:text-3xl text-cream/80 italic mb-3 leading-snug">
+              Toronto&apos;s authentic Philly-style cheesesteaks.
+            </p>
+            <p className="text-cream/55 text-sm md:text-base max-w-lg leading-relaxed mb-10">
+              CAB chuck rolls on a seeded baguette from Circles &amp; Squares bakery.
+              Sharp white cheddar. Caramelized onions. No compromises.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link
+                href="/order"
+                className="bg-cream text-teal px-8 py-3.5 rounded-full font-semibold text-sm tracking-wide hover:bg-white transition-colors duration-200 text-center"
+              >
+                Order Now
+              </Link>
+              <Link
+                href="/our-story"
+                className="border border-cream/30 text-cream px-8 py-3.5 rounded-full font-semibold text-sm tracking-wide hover:bg-cream/10 transition-colors duration-200 text-center"
+              >
+                Our Story
+              </Link>
             </div>
           </div>
         </div>
@@ -52,7 +56,7 @@ export default function Home() {
       <section className="py-20 md:py-28 bg-cream">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <p className="text-gold text-xs font-semibold uppercase tracking-widest mb-3">
+            <p className="text-gold text-xs font-semibold uppercase tracking-[0.2em] mb-3">
               The Process
             </p>
             <h2 className="font-display text-3xl md:text-4xl font-bold text-teal">
@@ -68,7 +72,7 @@ export default function Home() {
                   "See what we're serving. One sandwich, perfected — no compromises, no modifications.",
                 icon: (
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
                   </svg>
                 ),
               },
@@ -97,7 +101,7 @@ export default function Home() {
             ].map((item) => (
               <div
                 key={item.step}
-                className="bg-white rounded-2xl p-8 shadow-sm"
+                className="bg-white rounded-2xl p-8 shadow-sm card-hover"
               >
                 <div className="flex items-start gap-5">
                   <div className="shrink-0">
@@ -123,27 +127,38 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Our Story */}
+      {/* Our Story Preview — with Hayden's portrait */}
       <section className="py-20 md:py-28 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div className="flex justify-center">
-              <div className="w-72 h-72 rounded-full bg-teal/8 flex items-center justify-center mx-auto">
-                <Image
-                  src="/logo-icon.png"
-                  alt="Hayden's Authentic Cheesesteaks"
-                  width={192}
-                  height={192}
-                  className="w-48"
-                />
+              <div className="relative">
+                <div className="w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden shadow-lg">
+                  <Image
+                    src="/images/hayden-portrait.jpg"
+                    alt="Hayden Solomons"
+                    width={400}
+                    height={400}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="absolute -bottom-4 -right-4 w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-4 border-white shadow-md">
+                  <Image
+                    src="/images/logo-mark.jpg"
+                    alt="Hayden's logo mark"
+                    width={96}
+                    height={96}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </div>
             </div>
             <div>
-              <p className="text-gold text-xs font-semibold uppercase tracking-widest mb-4">
+              <p className="text-gold text-xs font-semibold uppercase tracking-[0.2em] mb-4">
                 The Story
               </p>
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-teal mb-6">
-                Built on Family,<br />Football & Flavour.
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-teal mb-6 leading-tight">
+                Built on Family,<br />Football &amp; Flavour.
               </h2>
               <div className="space-y-4 text-charcoal/70 leading-relaxed text-[15px]">
                 <p>
@@ -165,8 +180,18 @@ export default function Home() {
                 className="inline-flex items-center gap-2 mt-7 text-teal font-semibold text-sm hover:gap-3 transition-all duration-200"
               >
                 Read the full story
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                <svg
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                  />
                 </svg>
               </Link>
             </div>
@@ -174,23 +199,25 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Menu Preview */}
+      {/* Menu Preview — with cheesesteak photo */}
       <section className="py-20 md:py-28 bg-cream">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <div className="text-center md:text-left">
-              <p className="text-gold text-xs font-semibold uppercase tracking-widest mb-4">
+            <div className="text-center md:text-left order-2 md:order-1">
+              <p className="text-gold text-xs font-semibold uppercase tracking-[0.2em] mb-4">
                 The Menu
               </p>
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-teal mb-4">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-teal mb-4 leading-tight">
                 One Sandwich.<br />Perfected.
               </h2>
-              <p className="text-charcoal/65 text-[15px] leading-relaxed mb-4 max-w-sm">
+              <p className="text-charcoal/65 text-[15px] leading-relaxed mb-4 max-w-sm mx-auto md:mx-0">
                 CAB chuck rolls on a seeded baguette from Circles &amp; Squares bakery.
-                Sharp white cheddar. Caramelized onions. No compromises, no modifications.
+                Sharp white cheddar. Caramelized onions. No compromises.
               </p>
               <div className="inline-block bg-teal/8 rounded-xl px-6 py-4 mb-8 text-left">
-                <p className="text-xs text-charcoal/50 uppercase tracking-widest mb-1">Cheesesteak</p>
+                <p className="text-xs text-charcoal/50 uppercase tracking-widest mb-1">
+                  Cheesesteak
+                </p>
                 <p className="font-display text-4xl font-bold text-teal">$23</p>
               </div>
               <div>
@@ -202,14 +229,14 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-            <div className="flex justify-center md:justify-end">
-              <div className="w-64 h-64 rounded-full bg-teal/8 flex items-center justify-center">
+            <div className="flex justify-center md:justify-end order-1 md:order-2">
+              <div className="w-72 h-72 md:w-80 md:h-80 rounded-2xl overflow-hidden shadow-lg">
                 <Image
-                  src="/logo-icon.png"
-                  alt="Hayden's Authentic Cheesesteaks"
-                  width={160}
-                  height={160}
-                  className="w-40"
+                  src="/images/hero-cheesesteak.jpg"
+                  alt="Hayden's signature cheesesteak"
+                  width={400}
+                  height={400}
+                  className="w-full h-full object-cover"
                 />
               </div>
             </div>
@@ -220,7 +247,7 @@ export default function Home() {
       {/* Catering CTA */}
       <section className="py-20 md:py-24 bg-teal-dark">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-gold-light text-xs font-semibold uppercase tracking-widest mb-4">
+          <p className="text-gold-light text-xs font-semibold uppercase tracking-[0.2em] mb-4">
             Catering
           </p>
           <h2 className="font-display text-3xl md:text-4xl font-bold text-cream mb-4">
@@ -242,7 +269,7 @@ export default function Home() {
       {/* Instagram */}
       <section className="py-20 md:py-24 bg-cream">
         <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-gold text-xs font-semibold uppercase tracking-widest mb-4">
+          <p className="text-gold text-xs font-semibold uppercase tracking-[0.2em] mb-4">
             Instagram
           </p>
           <h2 className="font-display text-3xl md:text-4xl font-bold text-teal mb-3">
@@ -257,10 +284,16 @@ export default function Home() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 bg-white border border-cream-dark text-charcoal px-8 py-4 rounded-2xl hover:border-teal/30 hover:shadow-sm transition-all duration-200"
           >
-            <svg className="h-6 w-6 text-teal shrink-0" fill="currentColor" viewBox="0 0 24 24">
+            <svg
+              className="h-6 w-6 text-teal shrink-0"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
             </svg>
-            <span className="font-semibold text-[15px]">@haydens_cheesesteaks</span>
+            <span className="font-semibold text-[15px]">
+              @haydens_cheesesteaks
+            </span>
           </a>
         </div>
       </section>
