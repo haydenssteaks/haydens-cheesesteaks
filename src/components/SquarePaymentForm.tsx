@@ -49,7 +49,9 @@ export default function SquarePaymentForm({
     initRef.current = true;
 
     const script = document.createElement("script");
-    script.src = "https://sandbox.web.squarecdn.com/v1/square.js";
+    script.src = process.env.NEXT_PUBLIC_SQUARE_ENVIRONMENT === "production"
+      ? "https://web.squarecdn.com/v1/square.js"
+      : "https://sandbox.web.squarecdn.com/v1/square.js";
     script.onload = async () => {
       try {
         if (!window.Square) throw new Error("Square SDK not loaded");
