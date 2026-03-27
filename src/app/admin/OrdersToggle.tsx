@@ -9,7 +9,7 @@ export default function OrdersToggle({ initialOpen }: { initialOpen: boolean }) 
 
   function handleToggle() {
     setOpen((prev) => !prev);
-    startTransition(() => setOrdersOpen(!open));
+    startTransition(() => setOrdersOpen({ open: !open }));
   }
 
   return (

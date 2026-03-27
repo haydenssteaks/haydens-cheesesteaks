@@ -20,7 +20,7 @@ export default function EventsTable({ initialEvents }: { initialEvents: Event[] 
     setEvents((prev) =>
       prev.map((e) => (e.id === id ? { ...e, orders_open: !current } : e))
     );
-    startTransition(() => setOrdersOpen(!current));
+    startTransition(() => setOrdersOpen({ open: !current }));
   }
 
   return (

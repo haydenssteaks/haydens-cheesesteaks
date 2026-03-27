@@ -24,7 +24,7 @@ const cateringInquirySchema = z.object({
 });
 
 const createOrderSchema = z.object({
-  event_id: z.string().uuid(),
+  event_id: z.string().uuid().optional(),
   customer_name: z.string().min(1, "Name is required").max(200),
   customer_email: z.email("Invalid email address"),
   customer_phone: z.string().max(30).optional(),
@@ -90,7 +90,7 @@ export async function submitCateringInquiry(input: {
 }
 
 export async function createOrder(input: {
-  event_id: string;
+  event_id?: string;
   customer_name: string;
   customer_email: string;
   customer_phone?: string;
@@ -135,7 +135,7 @@ export async function createOrder(input: {
   const { data: order, error: orderError } = await supabase
     .from("orders")
     .insert({
-      event_id: parsed.event_id,
+      ...(parsed.event_id ? { event_id: parsed.event_id } : {}),
       customer_name: parsed.customer_name,
       customer_email: parsed.customer_email,
       customer_phone: parsed.customer_phone || null,
