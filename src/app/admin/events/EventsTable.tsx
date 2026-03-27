@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { toggleOrdersOpen } from "@/lib/actions";
+import { setOrdersOpen } from "@/lib/actions";
 
 interface Event {
   id: string;
@@ -20,7 +20,7 @@ export default function EventsTable({ initialEvents }: { initialEvents: Event[] 
     setEvents((prev) =>
       prev.map((e) => (e.id === id ? { ...e, orders_open: !current } : e))
     );
-    startTransition(() => toggleOrdersOpen(id, !current));
+    startTransition(() => setOrdersOpen(!current));
   }
 
   return (

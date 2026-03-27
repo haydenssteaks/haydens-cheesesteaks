@@ -1,11 +1,17 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Menu | Hayden's Authentic Cheesesteaks",
-  description: "Our menu featuring authentic Philly-style cheesesteaks served with white cheddar cheese and caramelized onions.",
+  description: "One sandwich. Perfected. Authentic Philly-style cheesesteak served with white american cheese, sharp cheddar and caramelized onions.",
 };
+
+const INGREDIENTS = [
+  "Sesame seed baguette",
+  "White american cheese",
+  "Sharp cheddar cheese",
+  "Caramelized onions",
+];
 
 export default function MenuPage() {
   return (
@@ -20,7 +26,6 @@ export default function MenuPage() {
             One Sandwich. Perfected.
           </h1>
           <p className="text-cream/60 max-w-md mx-auto text-[15px] leading-relaxed">
-            Premium CAB chuck rolls. Seeded baguettes from Circles &amp; Squares.
             No compromises, no modifications.
           </p>
         </div>
@@ -28,67 +33,33 @@ export default function MenuPage() {
 
       {/* Menu Content */}
       <section className="py-20 md:py-28 bg-cream">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-lg px-4 sm:px-6 lg:px-8">
 
-          {/* Main Item */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 items-center mb-16">
-            <div>
-              <Image
-                src="/images/page-12.png"
-                alt="Cheesesteak — $23"
-                width={400}
-                height={400}
-                className="w-full rounded-2xl shadow-sm"
-              />
+          {/* Item card */}
+          <div className="bg-white rounded-2xl p-10 shadow-sm mb-8 text-center">
+            <div className="inline-block bg-gold/15 text-gold px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
+              Signature
             </div>
-            <div>
-              <div className="inline-block bg-gold/15 text-gold px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-4">
-                Signature
-              </div>
-              <h2 className="font-display text-4xl font-bold text-teal mb-2">
-                Cheesesteak
-              </h2>
-              <p className="font-display text-5xl font-bold text-charcoal mb-5">
-                $23
-              </p>
-              <p className="text-charcoal/60 text-sm leading-relaxed mb-2">
-                Served with sharp white cheddar cheese &amp; caramelized onions.
-              </p>
-              <p className="text-charcoal/40 text-xs uppercase tracking-wider">
-                No modifications
-              </p>
-            </div>
-          </div>
+            <h2 className="font-display text-4xl font-bold text-teal mb-3">
+              Cheesesteak
+            </h2>
+            <p className="font-display text-6xl font-bold text-charcoal mb-8">
+              $23
+            </p>
 
-          {/* Divider */}
-          <div className="border-t border-cream-dark mb-12" />
-
-          {/* Ingredients */}
-          <div className="mb-14">
-            <h3 className="font-display text-2xl font-bold text-teal mb-8 text-center">
-              What Goes Into It
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-10">
-              {[
-                { name: "CAB Chuck Rolls", detail: "Certified Angus Beef, chopped fresh" },
-                { name: "Seeded Baguettes", detail: "From Circles & Squares bakery" },
-                { name: "Sharp White Cheddar", detail: "Premium Arla cheddar" },
-                { name: "American Cheese", detail: "Classic Philly tradition" },
-                { name: "Sweet Onions", detail: "Caramelized to perfection" },
-              ].map((ingredient) => (
-                <div key={ingredient.name} className="flex items-start gap-4">
-                  <div className="w-1 h-1 rounded-full bg-gold mt-2.5 shrink-0" />
-                  <div>
-                    <p className="font-semibold text-charcoal text-[15px]">
-                      {ingredient.name}
-                    </p>
-                    <p className="text-charcoal/50 text-sm mt-0.5">
-                      {ingredient.detail}
-                    </p>
-                  </div>
-                </div>
+            {/* Ingredients */}
+            <ul className="space-y-3 mb-8 text-left inline-block">
+              {INGREDIENTS.map((ingredient) => (
+                <li key={ingredient} className="flex items-center gap-3 text-charcoal/70 text-[15px]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
+                  {ingredient}
+                </li>
               ))}
-            </div>
+            </ul>
+
+            <p className="text-charcoal/35 text-xs uppercase tracking-wider">
+              No modifications
+            </p>
           </div>
 
           {/* CTA */}
@@ -97,15 +68,16 @@ export default function MenuPage() {
               Ready to try one?
             </p>
             <p className="text-cream/60 text-sm mb-7">
-              Pre-order for our next pop-up event and we&apos;ll have it ready for you.
+              Order now for pickup at our next pop-up event.
             </p>
             <Link
-              href="/events"
+              href="/order"
               className="inline-block bg-cream text-teal px-8 py-3.5 rounded-full font-semibold text-sm tracking-wide hover:bg-white transition-colors duration-200"
             >
-              See Upcoming Events
+              Order Now
             </Link>
           </div>
+
         </div>
       </section>
     </>

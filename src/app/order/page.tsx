@@ -1,23 +1,21 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import SquarePaymentForm from "@/components/SquarePaymentForm";
 import { createOrder } from "@/lib/actions";
+import { createClient } from "@/lib/supabase/client";
 
-const MENU_ITEMS = [
-  {
-    id: "cheesesteak",
-    name: "Cheesesteak",
-    description: "Served with white cheddar cheese & caramelized onions. No modifications.",
-    price: 2300, // cents
-  },
-];
+const MENU_ITEM = {
+  id: "cheesesteak",
+  name: "Cheesesteak",
+  description: "Sesame seed baguette, white american cheese, sharp cheddar & caramelized onions. No modifications.",
+  price: 2300,
+};
 
 export default function OrderPage() {
-  const params = useParams();
-  const [quantities, setQuantities] = useState<Record<string, number>>({});
+  const [ordersOpen, setOrdersOpen] = useState<boolean | null>(null);
+  const [quantity, setQuantity] = useState(1);
   const [customerName, setCustomerName] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
@@ -25,6 +23,18 @@ export default function OrderPage() {
   const [step, setStep] = useState<"build" | "checkout" | "confirmation">("build");
   const [processing, setProcessing] = useState(false);
   const [paymentError, setPaymentError] = useState("");
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase
+      .from("settings")
+      .select("value")
+      .eq("key", "orders_open")
+      .single()
+      .then(({ data }) => setOrdersOpen(data?.value === "true"));
+  }, []);
+
+  const total = MENU_ITEM.price * quantity;
 
   const handlePaymentError = useCallback((error: string) => {
     setPaymentError(error);
@@ -45,7 +55,6 @@ export default function OrderPage() {
             currency: "CAD",
             customerName,
             customerEmail,
-            eventId: params.eventId,
           }),
         });
         const data = await res.json();
@@ -57,10 +66,7 @@ export default function OrderPage() {
             notes,
             totalCents: total,
             squarePaymentId: data.paymentId,
-            items: Object.entries(quantities).map(([id, qty]) => {
-              const item = MENU_ITEMS.find((m) => m.id === id)!;
-              return { id, name: item.name, quantity: qty, priceCents: item.price };
-            }),
+            items: [{ id: MENU_ITEM.id, name: MENU_ITEM.name, quantity, priceCents: MENU_ITEM.price }],
           });
           setStep("confirmation");
         } else {
@@ -71,33 +77,45 @@ export default function OrderPage() {
       }
       setProcessing(false);
     },
-    [customerName, customerEmail, customerPhone, notes, quantities, params.eventId]
+    [customerName, customerEmail, customerPhone, notes, quantity, total]
   );
 
-  const total = Object.entries(quantities).reduce((sum, [id, qty]) => {
-    const item = MENU_ITEMS.find((m) => m.id === id);
-    return sum + (item ? item.price * qty : 0);
-  }, 0);
-
-  const itemCount = Object.values(quantities).reduce((sum, qty) => sum + qty, 0);
-
-  function updateQty(id: string, delta: number) {
-    setQuantities((prev) => {
-      const current = prev[id] || 0;
-      const next = Math.max(0, current + delta);
-      if (next === 0) {
-        const { [id]: _, ...rest } = prev;
-        return rest;
-      }
-      return { ...prev, [id]: next };
-    });
+  // Loading
+  if (ordersOpen === null) {
+    return (
+      <section className="py-32 bg-cream text-center">
+        <p className="text-charcoal/40 text-sm">Loading...</p>
+      </section>
+    );
   }
 
-  function handleCheckout(e: React.FormEvent) {
-    e.preventDefault();
-    // Payment is handled by SquarePaymentForm component
+  // Orders closed
+  if (!ordersOpen) {
+    return (
+      <>
+        <section className="bg-teal py-20 md:py-24 text-center">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <h1 className="font-display text-4xl md:text-5xl font-bold text-cream mb-4">
+              Orders Closed
+            </h1>
+            <p className="text-cream/60 max-w-md mx-auto text-[15px] leading-relaxed">
+              We&apos;re not taking orders right now. Check back soon or follow us on Instagram for updates.
+            </p>
+          </div>
+        </section>
+        <section className="py-16 bg-cream text-center">
+          <Link
+            href="/"
+            className="inline-block bg-teal text-cream px-8 py-3.5 rounded-full font-semibold text-sm tracking-wide hover:bg-teal-dark transition-colors duration-200"
+          >
+            Back to Home
+          </Link>
+        </section>
+      </>
+    );
   }
 
+  // Confirmation
   if (step === "confirmation") {
     return (
       <>
@@ -112,29 +130,22 @@ export default function OrderPage() {
               Order Confirmed!
             </h1>
             <p className="text-cream/60 max-w-md mx-auto text-[15px] leading-relaxed">
-              A confirmation email has been sent to {customerEmail}. Show this
-              page at the event to pick up your order.
+              A confirmation email has been sent to {customerEmail}. Show this page at pickup.
             </p>
           </div>
         </section>
         <section className="py-16 bg-cream">
           <div className="mx-auto max-w-md px-4 text-center">
             <div className="bg-white rounded-2xl p-8 shadow-sm mb-6">
-              <p className="text-xs text-charcoal/40 uppercase tracking-widest mb-3">
-                Order Total
-              </p>
-              <p className="font-display text-4xl font-bold text-teal">
-                ${(total / 100).toFixed(2)}
-              </p>
-              <p className="text-sm text-charcoal/50 mt-3">
-                {itemCount} item{itemCount !== 1 ? "s" : ""} for pickup at the event
-              </p>
+              <p className="text-xs text-charcoal/40 uppercase tracking-widest mb-3">Order Total</p>
+              <p className="font-display text-4xl font-bold text-teal">${(total / 100).toFixed(2)}</p>
+              <p className="text-sm text-charcoal/50 mt-3">{quantity} × Cheesesteak</p>
             </div>
             <Link
-              href="/events"
+              href="/"
               className="inline-block bg-teal text-cream px-8 py-3.5 rounded-full font-semibold text-sm tracking-wide hover:bg-teal-dark transition-colors duration-200"
             >
-              Back to Events
+              Back to Home
             </Link>
           </div>
         </section>
@@ -144,64 +155,45 @@ export default function OrderPage() {
 
   return (
     <>
-      {/* Hero */}
       <section className="bg-teal py-12 md:py-16 text-center">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h1 className="font-display text-3xl md:text-4xl font-bold text-cream mb-2">
-            {step === "build" ? "Build Your Order" : "Checkout"}
+            {step === "build" ? "Your Order" : "Checkout"}
           </h1>
-          <p className="text-cream/50 text-sm">
-            Event #{params.eventId} &mdash; Pickup at the event
-          </p>
         </div>
       </section>
 
       <section className="py-10 md:py-16 bg-cream">
-        <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-lg px-4 sm:px-6 lg:px-8">
           {step === "build" ? (
             <>
-              {/* Menu Items */}
-              <div className="space-y-4 mb-6">
-                {MENU_ITEMS.map((item) => (
-                  <div
-                    key={item.id}
-                    className="bg-white rounded-2xl p-6 shadow-sm flex items-center justify-between gap-6"
+              {/* Menu item */}
+              <div className="bg-white rounded-2xl p-6 shadow-sm flex items-center justify-between gap-6 mb-4">
+                <div>
+                  <h3 className="font-display font-bold text-charcoal text-xl">{MENU_ITEM.name}</h3>
+                  <p className="text-charcoal/50 text-sm mt-1 leading-relaxed">{MENU_ITEM.description}</p>
+                  <p className="text-teal font-bold mt-2 text-lg">${(MENU_ITEM.price / 100).toFixed(2)}</p>
+                </div>
+                <div className="flex items-center gap-3 shrink-0">
+                  <button
+                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                    disabled={quantity <= 1}
+                    className="w-9 h-9 rounded-full border border-cream-dark text-charcoal hover:border-teal hover:text-teal transition-colors flex items-center justify-center font-bold text-lg disabled:opacity-30"
                   >
-                    <div className="min-w-0">
-                      <h3 className="font-display font-bold text-charcoal text-xl">
-                        {item.name}
-                      </h3>
-                      <p className="text-charcoal/50 text-sm mt-1 leading-relaxed">
-                        {item.description}
-                      </p>
-                      <p className="text-teal font-bold mt-2 text-lg">
-                        ${(item.price / 100).toFixed(2)}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-3 shrink-0">
-                      <button
-                        onClick={() => updateQty(item.id, -1)}
-                        className="w-9 h-9 rounded-full border border-cream-dark text-charcoal hover:border-teal hover:text-teal transition-colors flex items-center justify-center font-bold text-lg disabled:opacity-30"
-                        disabled={!quantities[item.id]}
-                      >
-                        −
-                      </button>
-                      <span className="w-7 text-center font-bold text-lg text-charcoal">
-                        {quantities[item.id] || 0}
-                      </span>
-                      <button
-                        onClick={() => updateQty(item.id, 1)}
-                        className="w-9 h-9 rounded-full bg-teal text-cream hover:bg-teal-dark transition-colors flex items-center justify-center font-bold text-lg"
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                    −
+                  </button>
+                  <span className="w-7 text-center font-bold text-lg text-charcoal">{quantity}</span>
+                  <button
+                    onClick={() => setQuantity((q) => q + 1)}
+                    className="w-9 h-9 rounded-full bg-teal text-cream hover:bg-teal-dark transition-colors flex items-center justify-center font-bold text-lg"
+                  >
+                    +
+                  </button>
+                </div>
               </div>
 
-              {/* Special Instructions */}
-              <div className="bg-white rounded-2xl p-6 shadow-sm mb-6">
+              {/* Notes */}
+              <div className="bg-white rounded-2xl p-6 shadow-sm mb-4">
                 <label className="block text-xs font-semibold text-charcoal/40 uppercase tracking-wider mb-2">
                   Special Instructions (optional)
                 </label>
@@ -214,21 +206,16 @@ export default function OrderPage() {
                 />
               </div>
 
-              {/* Order Summary Bar */}
+              {/* Summary */}
               <div className="bg-white rounded-2xl p-5 shadow-sm sticky bottom-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-xs text-charcoal/40 uppercase tracking-wider">
-                      {itemCount > 0 ? `${itemCount} item${itemCount !== 1 ? "s" : ""}` : "No items yet"}
-                    </p>
-                    <p className="font-display text-2xl font-bold text-teal mt-0.5">
-                      ${(total / 100).toFixed(2)}
-                    </p>
+                    <p className="text-xs text-charcoal/40 uppercase tracking-wider">{quantity} item{quantity !== 1 ? "s" : ""}</p>
+                    <p className="font-display text-2xl font-bold text-teal mt-0.5">${(total / 100).toFixed(2)}</p>
                   </div>
                   <button
                     onClick={() => setStep("checkout")}
-                    disabled={itemCount === 0}
-                    className="bg-teal text-cream px-7 py-3 rounded-full font-semibold text-sm tracking-wide hover:bg-teal-dark transition-colors duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="bg-teal text-cream px-7 py-3 rounded-full font-semibold text-sm tracking-wide hover:bg-teal-dark transition-colors duration-200"
                   >
                     Proceed to Checkout
                   </button>
@@ -236,39 +223,23 @@ export default function OrderPage() {
               </div>
             </>
           ) : (
-            /* Checkout Form */
-            <form onSubmit={handleCheckout}>
-              {/* Order Summary */}
+            <form onSubmit={(e) => e.preventDefault()}>
+              {/* Summary */}
               <div className="bg-white rounded-2xl p-6 shadow-sm mb-5">
                 <h3 className="font-display font-bold text-charcoal text-lg mb-4">Order Summary</h3>
-                {Object.entries(quantities).map(([id, qty]) => {
-                  const item = MENU_ITEMS.find((m) => m.id === id);
-                  if (!item) return null;
-                  return (
-                    <div
-                      key={id}
-                      className="flex justify-between text-sm py-2.5 border-b border-cream-dark last:border-0"
-                    >
-                      <span className="text-charcoal/70">
-                        {qty}× {item.name}
-                      </span>
-                      <span className="font-semibold text-charcoal">
-                        ${((item.price * qty) / 100).toFixed(2)}
-                      </span>
-                    </div>
-                  );
-                })}
+                <div className="flex justify-between text-sm py-2.5 border-b border-cream-dark">
+                  <span className="text-charcoal/70">{quantity}× Cheesesteak</span>
+                  <span className="font-semibold text-charcoal">${(total / 100).toFixed(2)}</span>
+                </div>
                 <div className="flex justify-between text-lg font-bold text-teal pt-3 mt-1">
                   <span>Total</span>
                   <span>${(total / 100).toFixed(2)}</span>
                 </div>
               </div>
 
-              {/* Customer Info */}
+              {/* Customer info */}
               <div className="bg-white rounded-2xl p-6 shadow-sm mb-5">
-                <h3 className="font-display font-bold text-charcoal text-lg mb-5">
-                  Your Information
-                </h3>
+                <h3 className="font-display font-bold text-charcoal text-lg mb-5">Your Information</h3>
                 <div className="space-y-4">
                   <div>
                     <label className="block text-xs font-semibold text-charcoal/40 uppercase tracking-wider mb-2">
@@ -312,9 +283,7 @@ export default function OrderPage() {
               <div className="bg-white rounded-2xl p-6 shadow-sm mb-5">
                 <h3 className="font-display font-bold text-charcoal text-lg mb-4">Payment</h3>
                 {paymentError && (
-                  <div className="bg-red-50 text-red-600 text-sm rounded-xl p-3 mb-4">
-                    {paymentError}
-                  </div>
+                  <div className="bg-red-50 text-red-600 text-sm rounded-xl p-3 mb-4">{paymentError}</div>
                 )}
                 <SquarePaymentForm
                   amount={total}

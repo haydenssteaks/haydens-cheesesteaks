@@ -21,25 +21,13 @@ CREATE TABLE menu_items (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE events (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name TEXT NOT NULL,
-  venue_name TEXT NOT NULL,
-  venue_address TEXT,
-  event_date DATE NOT NULL,
-  start_time TIME NOT NULL,
-  end_time TIME NOT NULL,
-  description TEXT,
-  image_url TEXT,
-  orders_open BOOLEAN DEFAULT FALSE,
-  max_orders INTEGER,
-  is_published BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMPTZ DEFAULT NOW()
+CREATE TABLE settings (
+  key TEXT PRIMARY KEY,
+  value TEXT NOT NULL
 );
 
 CREATE TABLE orders (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  event_id UUID NOT NULL REFERENCES events(id),
   user_id UUID REFERENCES auth.users(id),
   customer_name TEXT NOT NULL,
   customer_email TEXT NOT NULL,
@@ -80,10 +68,6 @@ CREATE TABLE catering_inquiries (
 );
 
 -- Indexes
-CREATE INDEX idx_events_date ON events(event_date);
-CREATE INDEX idx_events_published ON events(is_published, event_date);
-CREATE INDEX idx_orders_event ON orders(event_id);
-CREATE INDEX idx_orders_user ON orders(user_id);
 CREATE INDEX idx_orders_status ON orders(status);
 CREATE INDEX idx_order_items_order ON order_items(order_id);
 
@@ -92,11 +76,11 @@ ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
 ALTER TABLE order_items ENABLE ROW LEVEL SECURITY;
 ALTER TABLE menu_items ENABLE ROW LEVEL SECURITY;
-ALTER TABLE events ENABLE ROW LEVEL SECURITY;
+ALTER TABLE settings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE catering_inquiries ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Menu items are viewable by everyone" ON menu_items FOR SELECT USING (true);
-CREATE POLICY "Published events are viewable by everyone" ON events FOR SELECT USING (is_published = true);
+CREATE POLICY "Settings are viewable by everyone" ON settings FOR SELECT USING (true);
 CREATE POLICY "Users can view own orders" ON orders FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "Users can view own order items" ON order_items FOR SELECT USING (
   order_id IN (SELECT id FROM orders WHERE user_id = auth.uid())
@@ -107,6 +91,9 @@ CREATE POLICY "Anyone can insert catering inquiries" ON catering_inquiries FOR I
 CREATE POLICY "Anyone can insert orders" ON orders FOR INSERT WITH CHECK (true);
 CREATE POLICY "Anyone can insert order items" ON order_items FOR INSERT WITH CHECK (true);
 
--- Seed menu data
+-- Seed data
 INSERT INTO menu_items (name, description, price_cents, category, sort_order) VALUES
-  ('Cheesesteak', 'Served with white cheddar cheese & caramelized onions. No modifications.', 2300, 'sandwich', 1);
+  ('Cheesesteak', 'Served with white american cheese, sharp cheddar & caramelized onions. No modifications.', 2300, 'sandwich', 1);
+
+INSERT INTO settings (key, value) VALUES
+  ('orders_open', 'false');
