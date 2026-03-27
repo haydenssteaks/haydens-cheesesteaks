@@ -1,6 +1,6 @@
 export const BRAND = {
   name: "Hayden's Authentic Cheesesteaks",
-  tagline: "Pop-up cheesesteaks done right",
+  tagline: "What more do you want?",
   instagram: "haydens_cheesesteaks",
   instagramUrl: "https://www.instagram.com/haydens_cheesesteaks/",
   domain: "haydenscheesesteaks.com",
@@ -12,11 +12,11 @@ export const PREORDER = {
 } as const;
 
 export const COLORS = {
-  teal: "#1B6B5B",
-  tealDark: "#145248",
-  tealLight: "#238573",
-  cream: "#F5F0E8",
-  creamDark: "#EBE3D6",
+  green: "#195F48",
+  greenDark: "#134036",
+  greenLight: "#1E7358",
+  cream: "#F8F6EF",
+  creamDark: "#EDE9DF",
   gold: "#A89A7D",
   goldLight: "#C4B79E",
   charcoal: "#2D2D2D",
