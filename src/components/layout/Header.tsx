@@ -9,7 +9,6 @@ export default function Header() {
 
   const navLinks = [
     { href: "/menu", label: "Menu" },
-    { href: "/events", label: "Events" },
     { href: "/catering", label: "Catering" },
     { href: "/our-story", label: "Our Story" },
   ];
@@ -43,10 +42,10 @@ export default function Header() {
               </Link>
             ))}
             <Link
-              href="/events"
+              href="/order"
               className="bg-teal text-cream px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide hover:bg-teal-dark transition-colors duration-200 shrink-0"
             >
-              Pre-Order
+              Order Now
             </Link>
           </div>
 
@@ -84,11 +83,11 @@ export default function Header() {
               ))}
               <div className="pt-3 mt-1 border-t border-cream-dark">
                 <Link
-                  href="/events"
+                  href="/order"
                   className="inline-block bg-teal text-cream px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide hover:bg-teal-dark transition-colors text-center"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Pre-Order
+                  Order Now
                 </Link>
               </div>
             </div>

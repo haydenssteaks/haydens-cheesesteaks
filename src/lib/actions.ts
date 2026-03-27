@@ -3,15 +3,15 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 
-export async function toggleOrdersOpen(id: string, ordersOpen: boolean) {
+export async function setOrdersOpen(open: boolean) {
   const supabase = await createClient();
   const { error } = await supabase
-    .from("events")
-    .update({ orders_open: ordersOpen })
-    .eq("id", id);
+    .from("settings")
+    .update({ value: open ? "true" : "false" })
+    .eq("key", "orders_open");
   if (error) throw new Error(error.message);
-  revalidatePath("/admin/events");
-  revalidatePath("/events");
+  revalidatePath("/admin");
+  revalidatePath("/order");
 }
 
 export async function submitCateringInquiry(formData: FormData) {
@@ -32,7 +32,6 @@ export async function submitCateringInquiry(formData: FormData) {
 }
 
 export async function createOrder(data: {
-  eventId: string;
   customerName: string;
   customerEmail: string;
   customerPhone: string;
@@ -46,7 +45,6 @@ export async function createOrder(data: {
   const { data: order, error: orderError } = await supabase
     .from("orders")
     .insert({
-      event_id: data.eventId,
       customer_name: data.customerName,
       customer_email: data.customerEmail,
       customer_phone: data.customerPhone || null,
@@ -61,20 +59,19 @@ export async function createOrder(data: {
 
   if (orderError) throw new Error(orderError.message);
 
-  const orderItems = data.items.map((item) => ({
-    order_id: order.id,
-    menu_item_id: item.id,
-    item_name: item.name,
-    quantity: item.quantity,
-    unit_price_cents: item.priceCents,
-  }));
-
-  const { error: itemsError } = await supabase
-    .from("order_items")
-    .insert(orderItems);
+  const { error: itemsError } = await supabase.from("order_items").insert(
+    data.items.map((item) => ({
+      order_id: order.id,
+      menu_item_id: item.id,
+      item_name: item.name,
+      quantity: item.quantity,
+      unit_price_cents: item.priceCents,
+    }))
+  );
 
   if (itemsError) throw new Error(itemsError.message);
 
+  revalidatePath("/admin");
   revalidatePath("/admin/orders");
   return order.id;
 }
