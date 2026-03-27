@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import SquarePaymentForm from "@/components/SquarePaymentForm";
 
 const MENU_ITEMS = [
   {
@@ -23,6 +24,43 @@ export default function OrderPage() {
   const [notes, setNotes] = useState("");
   const [step, setStep] = useState<"build" | "checkout" | "confirmation">("build");
   const [processing, setProcessing] = useState(false);
+  const [paymentError, setPaymentError] = useState("");
+
+  const handlePaymentError = useCallback((error: string) => {
+    setPaymentError(error);
+    setProcessing(false);
+  }, []);
+
+  const handlePaymentSuccess = useCallback(
+    async (token: string) => {
+      setProcessing(true);
+      setPaymentError("");
+      try {
+        const res = await fetch("/api/payments", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            sourceId: token,
+            amount: total,
+            currency: "CAD",
+            customerName,
+            customerEmail,
+            eventId: params.eventId,
+          }),
+        });
+        const data = await res.json();
+        if (data.success) {
+          setStep("confirmation");
+        } else {
+          setPaymentError(data.error || "Payment failed. Please try again.");
+        }
+      } catch {
+        setPaymentError("Network error. Please try again.");
+      }
+      setProcessing(false);
+    },
+    [customerName, customerEmail, params.eventId]
+  );
 
   const total = Object.entries(quantities).reduce((sum, [id, qty]) => {
     const item = MENU_ITEMS.find((m) => m.id === id);
@@ -43,13 +81,9 @@ export default function OrderPage() {
     });
   }
 
-  async function handleCheckout(e: React.FormEvent) {
+  function handleCheckout(e: React.FormEvent) {
     e.preventDefault();
-    setProcessing(true);
-    // TODO: Integrate Square payment and Supabase order creation
-    await new Promise((r) => setTimeout(r, 1500));
-    setStep("confirmation");
-    setProcessing(false);
+    // Payment is handled by SquarePaymentForm component
   }
 
   if (step === "confirmation") {
@@ -263,35 +297,29 @@ export default function OrderPage() {
                 </div>
               </div>
 
-              {/* Payment Placeholder */}
+              {/* Square Payment */}
               <div className="bg-white rounded-2xl p-6 shadow-sm mb-6">
                 <h3 className="font-bold text-charcoal mb-4">Payment</h3>
-                <div className="border-2 border-dashed border-cream-dark rounded-lg p-8 text-center text-charcoal/40">
-                  <svg className="h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
-                  </svg>
-                  <p className="text-sm">
-                    Square payment form will be integrated here
-                  </p>
-                </div>
+                {paymentError && (
+                  <div className="bg-red-50 text-red-600 text-sm rounded-lg p-3 mb-4">
+                    {paymentError}
+                  </div>
+                )}
+                <SquarePaymentForm
+                  amount={total}
+                  onPaymentSuccess={handlePaymentSuccess}
+                  onPaymentError={handlePaymentError}
+                  processing={processing}
+                />
               </div>
 
-              <div className="flex gap-4">
-                <button
-                  type="button"
-                  onClick={() => setStep("build")}
-                  className="flex-1 border-2 border-teal text-teal py-3.5 rounded-full font-semibold text-sm uppercase tracking-wider hover:bg-teal/5 transition-colors"
-                >
-                  Back
-                </button>
-                <button
-                  type="submit"
-                  disabled={processing}
-                  className="flex-1 bg-teal text-cream py-3.5 rounded-full font-semibold text-sm uppercase tracking-wider hover:bg-teal-dark transition-colors disabled:opacity-50"
-                >
-                  {processing ? "Processing..." : `Pay $${(total / 100).toFixed(2)}`}
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={() => setStep("build")}
+                className="w-full border-2 border-teal text-teal py-3.5 rounded-full font-semibold text-sm uppercase tracking-wider hover:bg-teal/5 transition-colors"
+              >
+                Back to Order
+              </button>
             </form>
           )}
         </div>
