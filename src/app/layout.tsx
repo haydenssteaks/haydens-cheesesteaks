@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { getOrdersOpen } from "@/lib/orders";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: {
@@ -61,6 +62,9 @@ export default async function RootLayout({
   return (
     <html lang="en" className="h-full antialiased">
       <head>
+        <link rel="icon" href="/favicon.ico" sizes="32x32" />
+        <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -76,6 +80,7 @@ export default async function RootLayout({
         <Header ordersOpen={ordersOpen} />
         <main className="flex-1">{children}</main>
         <Footer ordersOpen={ordersOpen} />
+        <Analytics />
       </body>
     </html>
   );
