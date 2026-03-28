@@ -27,6 +27,8 @@ export default function OrderPageClient({ ordersOpen, menuItems }: OrderPageClie
   const [processing, setProcessing] = useState(false);
   const [paymentError, setPaymentError] = useState("");
   const [orderTotal, setOrderTotal] = useState(0);
+  const [orderNumber, setOrderNumber] = useState<number | null>(null);
+  const [pickupTime, setPickupTime] = useState<string | null>(null);
 
   const total = Object.entries(quantities).reduce((sum, [id, qty]) => {
     const item = menuItems.find((m) => m.id === id);
@@ -84,6 +86,7 @@ export default function OrderPageClient({ ordersOpen, menuItems }: OrderPageClie
             square_payment_id: data.paymentId,
           });
           setOrderTotal(orderResult.total_cents);
+          setOrderNumber(orderResult.order_number);
           setStep("confirmation");
         } else {
           setPaymentError(data.error || "Payment failed. Please try again.");
@@ -138,17 +141,30 @@ export default function OrderPageClient({ ordersOpen, menuItems }: OrderPageClie
               Order Confirmed!
             </h1>
             <p className="text-cream/60 max-w-md mx-auto text-[15px] leading-relaxed">
-              A confirmation email has been sent to {customerEmail}. Show this page at pickup.
+              A confirmation email has been sent to {customerEmail}.
             </p>
           </div>
         </section>
         <section className="py-16 bg-cream">
           <div className="mx-auto max-w-md px-4 text-center">
             <div className="bg-white rounded-2xl p-8 shadow-sm mb-6">
-              <p className="text-xs text-charcoal/40 uppercase tracking-widest mb-3">Order Total</p>
-              <p className="font-display text-4xl font-bold text-teal">${(displayTotal / 100).toFixed(2)}</p>
+              <p className="text-xs text-charcoal/40 uppercase tracking-widest mb-2">Order Number</p>
+              <p className="font-display text-4xl font-bold text-teal mb-6">
+                #{orderNumber}
+              </p>
+
+              {pickupTime && (
+                <>
+                  <p className="text-xs text-charcoal/40 uppercase tracking-widest mb-2">Pickup Time</p>
+                  <p className="font-display text-2xl font-bold text-charcoal mb-6">{pickupTime}</p>
+                </>
+              )}
+
+              <p className="text-xs text-charcoal/40 uppercase tracking-widest mb-2">Order Total</p>
+              <p className="font-display text-3xl font-bold text-teal">${(displayTotal / 100).toFixed(2)}</p>
               <p className="text-sm text-charcoal/50 mt-3">{itemCount} item{itemCount !== 1 ? "s" : ""}</p>
             </div>
+            <p className="text-charcoal/40 text-sm mb-6">Show this page at pickup.</p>
             <Link
               href="/"
               className="inline-block bg-teal text-cream px-8 py-3.5 rounded-full font-semibold text-sm tracking-wide hover:bg-teal-dark transition-colors duration-200"

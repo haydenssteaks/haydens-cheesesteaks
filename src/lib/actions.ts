@@ -4,6 +4,7 @@ import { z } from "zod/v4";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/admin";
+import { sendAdminOrderNotification, sendCustomerConfirmation } from "@/lib/email";
 
 // ── Schemas ──────────────────────────────────────────────────────
 
@@ -147,7 +148,7 @@ export async function createOrder(input: {
       total_cents,
       square_payment_id: parsed.square_payment_id,
     })
-    .select("id")
+    .select("id, order_number")
     .single();
 
   if (orderError || !order) throw new Error("Failed to create order");
@@ -170,6 +171,33 @@ export async function createOrder(input: {
 
   if (itemsError) throw new Error("Failed to create order items");
 
+  // Build items list for emails and response
+  const itemDetails = parsed.items.map((item) => {
+    const menuItem = menuMap.get(item.menu_item_id)!;
+    return { name: menuItem.name, quantity: item.quantity, unit_price_cents: menuItem.price_cents };
+  });
+
+  // Send emails (fire-and-forget — don't block the response)
+  const emailData = {
+    orderNumber: order.order_number,
+    customerName: parsed.customer_name,
+    customerEmail: parsed.customer_email,
+    customerPhone: parsed.customer_phone,
+    items: itemDetails,
+    totalCents: total_cents,
+    squarePaymentId: parsed.square_payment_id,
+  };
+  sendAdminOrderNotification(emailData).catch(console.error);
+  sendCustomerConfirmation(emailData).catch(console.error);
+
   revalidatePath("/admin/orders");
-  return { success: true, orderId: order.id, total_cents };
+  return {
+    success: true,
+    orderId: order.id,
+    order_number: order.order_number,
+    total_cents,
+    items: itemDetails,
+    customer_name: parsed.customer_name,
+    customer_email: parsed.customer_email,
+  };
 }
