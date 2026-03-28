@@ -10,8 +10,8 @@
 
 :root {
   --color-teal: #195F48;
-  --color-teal-dark: #134036;
-  --color-teal-light: #1E7358;
+  --color-teal-dark: #155040;
+  --color-teal-light: #1D6B52;
   --color-cream: #F8F6EF;
   --color-cream-dark: #EDE9DF;
   --color-gold: #A89A7D;
@@ -77,8 +77,8 @@ body {
   background: linear-gradient(
     135deg,
     rgba(25, 95, 72, 0.92) 0%,
-    rgba(19, 64, 54, 0.85) 50%,
-    rgba(25, 95, 72, 0.75) 100%
+    rgba(21, 80, 64, 0.88) 50%,
+    rgba(25, 95, 72, 0.78) 100%
   );
 }
 

@@ -37,9 +37,9 @@ export default function Header() {
       }`}
     >
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 md:h-18 items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center shrink-0">
+        <div className="relative flex h-16 md:h-18 items-center justify-between">
+          {/* Logo — centred */}
+          <Link href="/" className="absolute left-1/2 -translate-x-1/2 flex items-center">
             <Image
               src="/images/logo-mark.jpg"
               alt="Hayden's Cheesesteaks"
@@ -48,10 +48,13 @@ export default function Header() {
               className="h-10 w-10 md:h-11 md:w-11 rounded-full object-cover"
               priority
             />
-            <span className="ml-3 font-display text-lg font-bold text-teal hidden sm:block">
+            <span className="ml-2 font-script text-3xl text-teal hidden sm:block leading-none translate-y-[2px]">
               Hayden&apos;s
             </span>
           </Link>
+
+          {/* Spacer to balance layout */}
+          <div className="w-10 md:w-11 shrink-0" />
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-7">

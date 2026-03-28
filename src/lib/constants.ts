@@ -13,8 +13,8 @@ export const PREORDER = {
 
 export const COLORS = {
   green: "#195F48",
-  greenDark: "#134036",
-  greenLight: "#1E7358",
+  greenDark: "#155040",
+  greenLight: "#1D6B52",
   cream: "#F8F6EF",
   creamDark: "#EDE9DF",
   gold: "#A89A7D",
