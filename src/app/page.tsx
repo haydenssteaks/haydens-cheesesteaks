@@ -7,7 +7,7 @@ export default async function Home() {
   return (
     <>
       {/* Hero — Full-bleed food photography with overlay */}
-      <section className="relative min-h-[70vh] md:min-h-[90vh] flex items-center overflow-hidden">
+      <section className="relative min-h-[60vh] md:min-h-[90vh] flex items-center overflow-hidden">
         <Image
           src="/images/hero-cheesesteak.jpg"
           alt="Loaded Philly-style cheesesteaks from Hayden's"
@@ -17,8 +17,8 @@ export default async function Home() {
           sizes="100vw"
         />
         <div className="hero-gradient absolute inset-0" />
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 md:py-20 w-full">
-          <div className="flex flex-col md:flex-row items-center gap-5 md:gap-14 lg:gap-20">
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 md:py-20 w-full">
+          <div className="flex flex-col md:flex-row items-center gap-4 md:gap-14 lg:gap-20">
             {/* Logo */}
             <div className="shrink-0">
               <Image
@@ -35,7 +35,7 @@ export default async function Home() {
               <p className="font-script text-4xl md:text-5xl lg:text-6xl text-cream/80 font-bold mb-4 leading-snug">
                 Toronto&apos;s Signature Cheesesteak
               </p>
-              <p className="text-cream/80 text-sm md:text-base max-w-lg leading-relaxed mb-5">
+              <p className="text-cream/80 text-sm md:text-base max-w-lg leading-relaxed mb-4">
                 Premium hand-sliced beef on a sesame seed baguette from local Toronto favourite Circles and Squares.
                 White american cheese. Sharp cheddar. Six hour caramelized onions. No compromises.
               </p>
@@ -63,9 +63,9 @@ export default async function Home() {
       <div className="checker-strip bg-cream" />
 
       {/* How It Works */}
-      <section className="py-12 md:py-28 bg-cream">
+      <section className="py-8 md:py-28 bg-cream">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 md:mb-14">
+          <div className="text-center mb-6 md:mb-14">
             <p className="text-gold text-xs font-semibold uppercase tracking-[0.2em] mb-3">
               The Process
             </p>
@@ -73,7 +73,7 @@ export default async function Home() {
               How It Works
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
             {[
               {
                 step: "01",
@@ -112,7 +112,7 @@ export default async function Home() {
             ].map((item) => (
               <div
                 key={item.step}
-                className="bg-white rounded-2xl p-5 md:p-8 shadow-sm card-hover"
+                className="bg-white rounded-2xl p-4 md:p-8 shadow-sm card-hover"
               >
                 <div className="flex items-start gap-5">
                   <div className="shrink-0">
@@ -141,9 +141,9 @@ export default async function Home() {
       <div className="checker-strip bg-white" />
 
       {/* Our Story Preview — with Hayden's portrait */}
-      <section className="py-12 md:py-28 bg-white">
+      <section className="py-8 md:py-28 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-20 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 lg:gap-20 items-center">
             <div className="flex justify-center">
               <div className="relative">
                 <div className="w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden shadow-lg">
@@ -173,7 +173,7 @@ export default async function Home() {
               <h2 className="font-script text-3xl md:text-4xl text-teal mb-6 leading-tight">
                 Built on Family,<br />Football &amp; Flavour.
               </h2>
-              <div className="space-y-3 md:space-y-4 text-charcoal/70 leading-relaxed text-[15px]">
+              <div className="space-y-2 md:space-y-4 text-charcoal/70 leading-relaxed text-[15px]">
                 <p>
                   Food and Eagles football are the heart and soul of our family.
                   When Hayden Solomons was just 10 years old, he chose the
@@ -215,9 +215,9 @@ export default async function Home() {
       <div className="checker-strip bg-cream" />
 
       {/* Menu Preview — with cheesesteak photo */}
-      <section className="py-12 md:py-28 bg-cream">
+      <section className="py-8 md:py-28 bg-cream">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-20 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 lg:gap-20 items-center">
             <div className="text-center md:text-left order-2 md:order-1">
               <p className="text-gold text-xs font-semibold uppercase tracking-[0.2em] mb-4">
                 The Menu
@@ -229,7 +229,7 @@ export default async function Home() {
                 Premium hand-sliced beef on a sesame seed baguette from local Toronto favourite Circles and Squares.
                 White american cheese. Sharp cheddar. Six hour caramelized onions.
               </p>
-              <div className="inline-flex items-baseline gap-3 bg-teal/8 rounded-xl px-5 py-4 md:px-7 md:py-5 mb-6 md:mb-8">
+              <div className="inline-flex items-baseline gap-3 bg-teal/8 rounded-xl px-4 py-3 md:px-7 md:py-5 mb-5 md:mb-8">
                 <p className="text-sm font-semibold text-charcoal/50 uppercase tracking-wider">
                   Cheesesteak
                 </p>
@@ -263,15 +263,15 @@ export default async function Home() {
       <div className="checker-strip-cream bg-teal-dark" />
 
       {/* Catering CTA */}
-      <section className="py-12 md:py-24 bg-teal-dark">
+      <section className="py-8 md:py-24 bg-teal-dark">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-gold-light text-xs font-semibold uppercase tracking-[0.2em] mb-4">
             Catering
           </p>
-          <h2 className="font-script text-3xl md:text-4xl text-cream mb-4">
+          <h2 className="font-script text-3xl md:text-4xl text-cream mb-3">
             Feed Your Whole Crew.
           </h2>
-          <p className="text-cream/60 text-[15px] mb-8 leading-relaxed max-w-lg mx-auto">
+          <p className="text-cream/60 text-[15px] mb-6 leading-relaxed max-w-lg mx-auto">
             Corporate events, private parties, and everything in between.
             We bring the authentic cheesesteak experience to you.
           </p>
@@ -287,15 +287,15 @@ export default async function Home() {
       <div className="checker-strip bg-cream" />
 
       {/* Instagram */}
-      <section className="py-12 md:py-24 bg-cream">
+      <section className="py-8 md:py-24 bg-cream">
         <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-gold text-xs font-semibold uppercase tracking-[0.2em] mb-4">
             Instagram
           </p>
-          <h2 className="font-script text-3xl md:text-4xl text-teal mb-3">
+          <h2 className="font-script text-3xl md:text-4xl text-teal mb-2">
             Follow the Journey.
           </h2>
-          <p className="text-charcoal/55 text-[15px] mb-8">
+          <p className="text-charcoal/55 text-[15px] mb-6">
             New events announced on Instagram first. Stay in the loop.
           </p>
           <a
