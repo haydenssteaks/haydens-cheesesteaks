@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {
@@ -11,6 +11,8 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/";
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -27,7 +29,7 @@ export default function LoginPage() {
       if (authError) {
         setError(authError.message);
       } else {
-        router.push("/");
+        router.push(redirectTo);
         router.refresh();
       }
     } catch {
