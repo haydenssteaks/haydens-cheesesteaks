@@ -1,5 +1,5 @@
 export const BRAND = {
-  name: "Hayden's Authentic Cheesesteaks",
+  name: "Hayden's Cheesesteaks",
   tagline: "What more do you want?",
   instagram: "haydens_cheesesteaks",
   instagramUrl: "https://www.instagram.com/haydens_cheesesteaks/",

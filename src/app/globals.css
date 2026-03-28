@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Genty";
+  src: url("/fonts/Genty-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --color-teal: #195F48;
   --color-teal-dark: #134036;
@@ -12,6 +20,7 @@
   --color-amber: #D4A853;
   --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-script: "Genty", cursive;
 }
 
 @theme inline {
@@ -26,6 +35,7 @@
   --color-amber: var(--color-amber);
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
+  --font-script: var(--font-script);
 }
 
 html {
@@ -79,4 +89,32 @@ body {
 .card-hover:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Checker pattern strips */
+.checker-strip {
+  background-image: repeating-conic-gradient(
+    var(--color-teal) 0% 25%,
+    transparent 0% 50%
+  );
+  background-size: 14px 14px;
+  height: 14px;
+}
+
+.checker-strip-cream {
+  background-image: repeating-conic-gradient(
+    var(--color-cream) 0% 25%,
+    transparent 0% 50%
+  );
+  background-size: 14px 14px;
+  height: 14px;
+}
+
+.checker-strip-gold {
+  background-image: repeating-conic-gradient(
+    var(--color-gold) 0% 25%,
+    transparent 0% 50%
+  );
+  background-size: 14px 14px;
+  height: 14px;
 }

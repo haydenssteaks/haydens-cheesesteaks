@@ -5,9 +5,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Menu",
   description:
-    "One sandwich. Perfected. Authentic Philly-style cheesesteak: CAB chuck rolls, sharp cheddar, caramelized onions on a seeded baguette. $23.",
+    "One sandwich. Perfected. Authentic Philly-style cheesesteak: premium hand-sliced beef, white american cheese, sharp cheddar, six hour caramelized onions on a sesame seed baguette. $23.",
   openGraph: {
-    title: "Menu | Hayden's Authentic Cheesesteaks",
+    title: "Menu | Hayden's Cheesesteaks",
     description:
       "One sandwich. Perfected. Authentic Philly-style cheesesteak for $23.",
     images: ["/images/hero-cheesesteak.jpg"],
@@ -15,11 +15,14 @@ export const metadata: Metadata = {
 };
 
 const INGREDIENTS = [
-  { name: "CAB chuck rolls", detail: "Certified Angus Beef, hand-sliced" },
-  { name: "Sesame seed baguette", detail: "From Circles & Squares bakery" },
+  { name: "Premium hand-sliced beef", detail: "Thin-sliced and seared to order" },
+];
+
+const SIGNATURE_TOUCHES = [
+  { name: "Sesame seed baguette", detail: "From local Toronto favourite Circles and Squares" },
   { name: "White american cheese", detail: "Classic Philly-style base" },
   { name: "Sharp cheddar cheese", detail: "For that extra bite" },
-  { name: "Caramelized onions", detail: "Slow-cooked to perfection" },
+  { name: "Six hour caramelized onions", detail: "Slow-caramelized for deep, sweet flavour" },
 ];
 
 export default function MenuPage() {
@@ -50,11 +53,13 @@ export default function MenuPage() {
         </div>
       </section>
 
+      <div className="checker-strip bg-cream" />
+
       {/* Menu Content */}
       <section className="py-20 md:py-28 bg-cream">
         <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
           {/* Main item card */}
-          <div className="bg-white rounded-2xl overflow-hidden shadow-sm mb-6">
+          <div className="bg-white rounded-2xl overflow-hidden shadow-sm mb-8">
             {/* Food photo */}
             <div className="h-48 md:h-64 relative">
               <Image
@@ -65,23 +70,23 @@ export default function MenuPage() {
                 sizes="(max-width: 768px) 100vw, 672px"
               />
             </div>
-            <div className="p-8 md:p-10 text-center">
+            <div className="p-8 md:p-12 text-center">
               <div className="inline-block bg-gold/15 text-gold px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-5">
                 Signature
               </div>
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-teal mb-2">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-teal mb-3">
                 Cheesesteak
               </h2>
-              <p className="font-display text-5xl md:text-6xl font-bold text-charcoal mb-8">
+              <p className="text-4xl md:text-5xl font-bold text-charcoal mb-10 tracking-tight tabular-nums">
                 $23
               </p>
 
               {/* Ingredients */}
               <div className="text-left max-w-sm mx-auto">
-                <p className="text-xs text-charcoal/40 uppercase tracking-widest mb-4 text-center">
+                <p className="text-xs text-charcoal/40 uppercase tracking-widest mb-5 text-center">
                   What&apos;s Inside
                 </p>
-                <ul className="space-y-3 mb-8">
+                <ul className="space-y-4 mb-8">
                   {INGREDIENTS.map((ingredient) => (
                     <li
                       key={ingredient.name}
@@ -99,6 +104,28 @@ export default function MenuPage() {
                     </li>
                   ))}
                 </ul>
+
+                <p className="text-xs text-gold uppercase tracking-widest mb-5 text-center font-semibold">
+                  Signature Touches
+                </p>
+                <ul className="space-y-4 mb-10">
+                  {SIGNATURE_TOUCHES.map((item) => (
+                    <li
+                      key={item.name}
+                      className="flex items-start gap-3"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0 mt-2" />
+                      <div>
+                        <span className="text-charcoal font-semibold text-[15px]">
+                          {item.name}
+                        </span>
+                        <span className="text-charcoal/45 text-sm ml-2">
+                          {item.detail}
+                        </span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
               <p className="text-charcoal/35 text-xs uppercase tracking-wider">
@@ -108,7 +135,7 @@ export default function MenuPage() {
           </div>
 
           {/* Add-on */}
-          <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm mb-6">
+          <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm mb-8">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="font-display font-bold text-charcoal text-lg">

@@ -5,11 +5,11 @@ import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
   title: {
-    default: "Hayden's Authentic Cheesesteaks | Toronto's Philly-Style Cheesesteaks",
-    template: "%s | Hayden's Authentic Cheesesteaks",
+    default: "Hayden's Cheesesteaks | Toronto's Philly-Style Cheesesteaks",
+    template: "%s | Hayden's Cheesesteaks",
   },
   description:
-    "Toronto's authentic Philly-style cheesesteaks. CAB chuck rolls, sharp cheddar, caramelized onions on a seeded baguette. Order online for pickup at our next pop-up event.",
+    "Toronto's authentic Philly-style cheesesteaks. Premium hand-sliced beef, white american cheese, sharp cheddar, six hour caramelized onions on a sesame seed baguette. Order online or walk up at our next pop-up event.",
   keywords: [
     "cheesesteak",
     "Toronto",
@@ -20,25 +20,25 @@ export const metadata: Metadata = {
     "catering Toronto",
   ],
   openGraph: {
-    title: "Hayden's Authentic Cheesesteaks",
+    title: "Hayden's Cheesesteaks",
     description:
       "Toronto's authentic Philly-style cheesesteaks. Order online for pickup at our next pop-up event.",
     type: "website",
     url: "https://haydenscheesesteaks.com",
-    siteName: "Hayden's Authentic Cheesesteaks",
+    siteName: "Hayden's Cheesesteaks",
     locale: "en_CA",
     images: [
       {
         url: "/images/hero-cheesesteak.jpg",
         width: 1200,
         height: 630,
-        alt: "Hayden's Authentic Cheesesteaks — loaded Philly-style cheesesteaks",
+        alt: "Hayden's Cheesesteaks — loaded Philly-style cheesesteaks",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hayden's Authentic Cheesesteaks",
+    title: "Hayden's Cheesesteaks",
     description:
       "Toronto's authentic Philly-style cheesesteaks. Order online for pickup at our next pop-up event.",
     images: ["/images/hero-cheesesteak.jpg"],

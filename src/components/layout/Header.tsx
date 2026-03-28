@@ -42,7 +42,7 @@ export default function Header() {
           <Link href="/" className="flex items-center shrink-0">
             <Image
               src="/images/logo-mark.jpg"
-              alt="Hayden's Authentic Cheesesteaks"
+              alt="Hayden's Cheesesteaks"
               width={44}
               height={44}
               className="h-10 w-10 md:h-11 md:w-11 rounded-full object-cover"

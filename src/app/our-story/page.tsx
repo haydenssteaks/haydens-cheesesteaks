@@ -5,9 +5,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Our Story",
   description:
-    "The story behind Hayden's Authentic Cheesesteaks — a family tribute to Hayden Solomons and his love of Eagles football and Philly cheesesteaks.",
+    "The story behind Hayden's Cheesesteaks — a family tribute to Hayden Solomons and his love of Eagles football and Philly cheesesteaks.",
   openGraph: {
-    title: "Our Story | Hayden's Authentic Cheesesteaks",
+    title: "Our Story | Hayden's Cheesesteaks",
     description:
       "A family tribute to Hayden Solomons — how a love of Eagles football and Philly cheesesteaks became Toronto's go-to cheesesteak spot.",
     images: ["/images/hayden-portrait.jpg"],

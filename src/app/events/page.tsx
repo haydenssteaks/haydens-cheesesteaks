@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
-  title: "Events | Hayden's Authentic Cheesesteaks",
+  title: "Events | Hayden's Cheesesteaks",
   description: "Find our upcoming pop-up events and pre-order your authentic cheesesteak for pickup.",
 };
 
