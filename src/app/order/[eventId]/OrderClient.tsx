@@ -185,10 +185,7 @@ export default function OrderClient({
                       <h3 className="font-display font-bold text-charcoal text-xl">
                         {item.name}
                       </h3>
-                      <p className="text-charcoal/50 text-sm mt-1 leading-relaxed">
-                        {item.description}
-                      </p>
-                      <p className="text-teal font-bold mt-2 text-lg">
+                      <p className="text-teal font-bold mt-1 text-lg">
                         ${(item.price / 100).toFixed(2)}
                       </p>
                     </div>
@@ -212,20 +209,6 @@ export default function OrderClient({
                     </div>
                   </div>
                 ))}
-              </div>
-
-              {/* Special Instructions */}
-              <div className="bg-white rounded-2xl p-6 shadow-sm mb-6">
-                <label className="block text-xs font-semibold text-charcoal/40 uppercase tracking-wider mb-2">
-                  Special Instructions (optional)
-                </label>
-                <textarea
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                  rows={2}
-                  className="w-full px-4 py-3 rounded-xl border border-cream-dark bg-cream/40 text-charcoal text-sm focus:outline-none focus:ring-2 focus:ring-teal/30 focus:border-teal/50 transition-colors resize-none"
-                  placeholder="Any notes for your order..."
-                />
               </div>
 
               {/* Order Summary Bar */}
