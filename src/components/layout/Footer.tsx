@@ -8,8 +8,11 @@ export default function Footer({ ordersOpen = false }: { ordersOpen?: boolean })
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-14 pb-8">
         {/* Featured description */}
         <div className="text-center pb-10 border-b border-cream/10">
-          <p className="font-script text-2xl md:text-3xl text-cream leading-relaxed max-w-xl mx-auto">
-            Made with love by proud Canadian Eagles fans. Go Birds.
+          <p className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-cream max-w-xl mx-auto">
+            Made with love by proud Canadian Eagles fans.
+          </p>
+          <p className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-cream max-w-xl mx-auto mt-6">
+            Go Birds!
           </p>
         </div>
 
@@ -105,6 +108,13 @@ export default function Footer({ ordersOpen = false }: { ordersOpen?: boolean })
         <div className="pt-10 pb-4 text-center">
           <p className="font-script text-3xl md:text-4xl lg:text-5xl text-cream tracking-tight">
             What more could you want?
+          </p>
+        </div>
+
+        {/* Copyright */}
+        <div className="pt-4 pb-2 text-center">
+          <p className="text-cream/30 text-xs">
+            All Rights Reserved
           </p>
         </div>
       </div>

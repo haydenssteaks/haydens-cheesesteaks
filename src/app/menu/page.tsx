@@ -19,10 +19,10 @@ const INGREDIENTS = [
 ];
 
 const SIGNATURE_TOUCHES = [
-  { name: "Sesame seed baguette", detail: "From local Toronto favourite Circles and Squares" },
+  { name: "Sesame seed baguette", detail: "From the best bakery in Toronto (trust us, we looked)" },
   { name: "White american cheese", detail: "Classic Philly-style base" },
   { name: "Sharp cheddar cheese", detail: "For that extra bite" },
-  { name: "Six hour caramelized onions", detail: "Slow-caramelized for deep, sweet flavour" },
+  { name: "Wit Sweet Onions", detail: "Caramelized for six hours for a deep jammy flavour" },
 ];
 
 export default function MenuPage() {
@@ -74,7 +74,7 @@ export default function MenuPage() {
               <div className="inline-block bg-gold/15 text-gold px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-5">
                 Signature
               </div>
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-teal mb-3">
+              <h2 className="font-script text-3xl md:text-4xl font-bold text-teal mb-3">
                 Cheesesteak
               </h2>
               <p className="text-4xl md:text-5xl font-bold text-charcoal mb-10 tracking-tight tabular-nums">
@@ -129,23 +129,8 @@ export default function MenuPage() {
               </div>
 
               <p className="text-charcoal/35 text-xs uppercase tracking-wider">
-                No modifications
+                Optional: Pickled Hot Peppers - $1
               </p>
-            </div>
-          </div>
-
-          {/* Add-on */}
-          <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm mb-8">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="font-display font-bold text-charcoal text-lg">
-                  Pickled Hot Peppers
-                </h3>
-                <p className="text-charcoal/50 text-sm mt-0.5">
-                  House pickled jalape&ntilde;os &amp; cherry peppers
-                </p>
-              </div>
-              <p className="text-teal font-bold text-lg shrink-0">+$1</p>
             </div>
           </div>
 
