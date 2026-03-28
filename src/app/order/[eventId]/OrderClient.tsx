@@ -179,34 +179,34 @@ export default function OrderClient({
                 {menuItems.map((item) => (
                   <div
                     key={item.id}
-                    className="bg-white rounded-2xl p-6 shadow-sm flex items-center justify-between gap-6"
+                    className="bg-white rounded-2xl px-6 py-5 shadow-sm"
                   >
-                    <div className="min-w-0">
+                    <div className="flex items-center justify-between gap-4">
                       <h3 className="font-display font-bold text-charcoal text-xl">
                         {item.name}
                       </h3>
-                      <p className="text-teal font-bold mt-1 text-lg">
-                        ${(item.price / 100).toFixed(2)}
-                      </p>
+                      <div className="flex items-center gap-3 shrink-0">
+                        <button
+                          onClick={() => updateQty(item.id, -1)}
+                          className="w-9 h-9 rounded-full border border-cream-dark text-charcoal hover:border-teal hover:text-teal transition-colors flex items-center justify-center font-bold text-lg disabled:opacity-30"
+                          disabled={!quantities[item.id]}
+                        >
+                          −
+                        </button>
+                        <span className="w-7 text-center font-bold text-lg text-charcoal">
+                          {quantities[item.id] || 0}
+                        </span>
+                        <button
+                          onClick={() => updateQty(item.id, 1)}
+                          className="w-9 h-9 rounded-full bg-teal text-cream hover:bg-teal-dark transition-colors flex items-center justify-center font-bold text-lg"
+                        >
+                          +
+                        </button>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-3 shrink-0">
-                      <button
-                        onClick={() => updateQty(item.id, -1)}
-                        className="w-9 h-9 rounded-full border border-cream-dark text-charcoal hover:border-teal hover:text-teal transition-colors flex items-center justify-center font-bold text-lg disabled:opacity-30"
-                        disabled={!quantities[item.id]}
-                      >
-                        −
-                      </button>
-                      <span className="w-7 text-center font-bold text-lg text-charcoal">
-                        {quantities[item.id] || 0}
-                      </span>
-                      <button
-                        onClick={() => updateQty(item.id, 1)}
-                        className="w-9 h-9 rounded-full bg-teal text-cream hover:bg-teal-dark transition-colors flex items-center justify-center font-bold text-lg"
-                      >
-                        +
-                      </button>
-                    </div>
+                    <p className="text-teal font-bold mt-1 text-lg">
+                      ${(item.price / 100).toFixed(2)}
+                    </p>
                   </div>
                 ))}
               </div>
