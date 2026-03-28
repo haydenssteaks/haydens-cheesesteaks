@@ -8,10 +8,10 @@ export default function Footer({ ordersOpen = false }: { ordersOpen?: boolean })
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-14 pb-8">
         {/* Featured description */}
         <div className="text-center pb-10 border-b border-cream/10">
-          <p className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-cream max-w-xl mx-auto">
+          <p className="font-script text-4xl md:text-5xl lg:text-6xl text-cream max-w-xl mx-auto">
             Made with love by proud Canadian Eagles fans.
           </p>
-          <p className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-cream max-w-xl mx-auto mt-6">
+          <p className="font-script text-4xl md:text-5xl lg:text-6xl text-cream max-w-xl mx-auto mt-6">
             Go Birds!
           </p>
         </div>

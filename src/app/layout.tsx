@@ -31,10 +31,10 @@ export const metadata: Metadata = {
     locale: "en_CA",
     images: [
       {
-        url: "/images/hero-cheesesteak.jpg",
+        url: "/images/logo-full-text.jpg",
         width: 1200,
-        height: 630,
-        alt: "Hayden's Cheesesteaks — loaded Philly-style cheesesteaks",
+        height: 1200,
+        alt: "Hayden's Authentic Cheesesteaks logo",
       },
     ],
   },
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     title: "Hayden's Cheesesteaks",
     description:
       "Toronto's authentic Philly-style cheesesteaks. Order online for pickup at our next pop-up event.",
-    images: ["/images/hero-cheesesteak.jpg"],
+    images: ["/images/logo-full-text.jpg"],
   },
   robots: {
     index: true,

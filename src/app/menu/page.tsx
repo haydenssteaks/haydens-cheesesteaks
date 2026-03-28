@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     title: "Menu | Hayden's Cheesesteaks",
     description:
       "One sandwich. Perfected. Authentic Philly-style cheesesteak for $23.",
-    images: ["/images/hero-cheesesteak.jpg"],
+    images: ["/images/logo-full-text.jpg"],
   },
 };
 
