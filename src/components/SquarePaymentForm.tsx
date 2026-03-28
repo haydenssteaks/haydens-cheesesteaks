@@ -66,7 +66,8 @@ export default function SquarePaymentForm({
         setLoading(false);
       } catch (err) {
         console.error("Square init error:", err);
-        onPaymentError("Failed to load payment form. Please refresh.");
+        const message = err instanceof Error ? err.message : String(err);
+        onPaymentError(`Failed to load payment form: ${message}`);
         setLoading(false);
       }
     };
@@ -96,7 +97,9 @@ export default function SquarePaymentForm({
         onPaymentError(errorMsg);
       }
     } catch (err) {
-      onPaymentError("An unexpected error occurred.");
+      console.error("Square tokenize error:", err);
+      const message = err instanceof Error ? err.message : "An unexpected error occurred.";
+      onPaymentError(message);
     }
   }
 
