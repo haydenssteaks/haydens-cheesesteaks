@@ -36,7 +36,7 @@ export default async function Home() {
                 Toronto&apos;s Signature Cheesesteak
               </p>
               <p className="text-cream/80 text-sm md:text-base max-w-lg leading-relaxed mb-3 md:mb-4">
-                Premium hand-sliced beef on a sesame seed baguette from local Toronto favourite Circles and Squares.
+                Premium hand-sliced beef on a sesame seed baguette sourced from the best bakery in Toronto (at least in our opinion).
                 White american cheese. Sharp cheddar. Six hour caramelized onions. No compromises.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
@@ -226,7 +226,7 @@ export default async function Home() {
                 We do one thing, perfectly.
               </h2>
               <p className="text-charcoal/65 text-[15px] leading-relaxed mb-4 max-w-sm mx-auto md:mx-0">
-                Premium hand-sliced beef on a sesame seed baguette from local Toronto favourite Circles and Squares.
+                Premium hand-sliced beef on a sesame seed baguette sourced from the best bakery in Toronto (at least in our opinion).
                 White american cheese. Sharp cheddar. Six hour caramelized onions.
               </p>
               <div className="inline-flex items-baseline gap-3 bg-teal/8 rounded-xl px-4 py-3 md:px-7 md:py-5 mb-5 md:mb-8">
