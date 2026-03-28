@@ -32,7 +32,7 @@ export default async function Home() {
             </div>
             {/* Copy */}
             <div className="text-center md:text-left">
-              <p className="font-script text-4xl md:text-5xl lg:text-6xl text-cream/80 mb-2 md:mb-4 leading-snug">
+              <p className="font-script text-4xl md:text-5xl lg:text-6xl text-cream mb-2 md:mb-4 leading-snug">
                 Toronto&apos;s Signature Cheesesteak
               </p>
               <p className="text-cream/80 text-sm md:text-base max-w-lg leading-relaxed mb-3 md:mb-4">
