@@ -48,7 +48,7 @@ export default function Header({ ordersOpen = false }: { ordersOpen?: boolean })
               className="h-10 w-10 md:h-11 md:w-11 rounded-full object-cover"
               priority
             />
-            <span className="ml-2 font-script text-3xl text-teal hidden sm:block leading-none translate-y-[2px]">
+            <span className="ml-2 font-script text-3xl text-teal hidden sm:block leading-none relative top-[2px]">
               Hayden&apos;s
             </span>
           </Link>

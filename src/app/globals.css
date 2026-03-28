@@ -8,6 +8,12 @@
   font-display: swap;
 }
 
+.font-script {
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
 :root {
   --color-teal: #195F48;
   --color-teal-dark: #155040;
