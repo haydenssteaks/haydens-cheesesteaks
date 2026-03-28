@@ -22,7 +22,7 @@ const SIGNATURE_TOUCHES = [
   { name: "Sesame seed baguette", detail: "From the best bakery in Toronto (trust us, we looked)" },
   { name: "White american cheese", detail: "Classic Philly-style base" },
   { name: "Sharp cheddar cheese", detail: "For that extra bite" },
-  { name: "Wit Sweet Onions", detail: "Caramelized for six hours for a deep jammy flavour" },
+  { name: "'Wit' Sweet Onions", detail: "Caramelized for six hours for a deep jammy flavour" },
 ];
 
 export default function MenuPage() {
