@@ -7,7 +7,7 @@ export default async function Home() {
   return (
     <>
       {/* Hero — Full-bleed food photography with overlay */}
-      <section className="relative min-h-[60vh] md:min-h-[90vh] flex items-center overflow-hidden">
+      <section className="relative md:min-h-[90vh] flex items-center overflow-hidden">
         <Image
           src="/images/hero-cheesesteak.jpg"
           alt="Loaded Philly-style cheesesteaks from Hayden's"
@@ -17,25 +17,25 @@ export default async function Home() {
           sizes="100vw"
         />
         <div className="hero-gradient absolute inset-0" />
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 md:py-20 w-full">
-          <div className="flex flex-col md:flex-row items-center gap-4 md:gap-14 lg:gap-20">
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 md:py-20 w-full">
+          <div className="flex flex-col md:flex-row items-center gap-3 md:gap-14 lg:gap-20">
             {/* Logo */}
-            <div className="shrink-0">
+            <div className="shrink-0 mx-auto md:mx-0">
               <Image
                 src="/images/logo-full-text.jpg"
                 alt="Hayden's Cheesesteaks logo"
-                width={320}
-                height={320}
-                className="w-[200px] h-[200px] rounded-2xl shadow-2xl object-cover ring-2 ring-cream/20"
+                width={200}
+                height={200}
+                className="w-[140px] h-[140px] md:w-[200px] md:h-[200px] rounded-2xl shadow-2xl object-cover ring-2 ring-cream/20"
                 priority
               />
             </div>
             {/* Copy */}
             <div className="text-center md:text-left">
-              <p className="font-script text-4xl md:text-5xl lg:text-6xl text-cream/80 font-bold mb-4 leading-snug">
+              <p className="font-script text-4xl md:text-5xl lg:text-6xl text-cream/80 font-bold mb-2 md:mb-4 leading-snug">
                 Toronto&apos;s Signature Cheesesteak
               </p>
-              <p className="text-cream/80 text-sm md:text-base max-w-lg leading-relaxed mb-4">
+              <p className="text-cream/80 text-sm md:text-base max-w-lg leading-relaxed mb-3 md:mb-4">
                 Premium hand-sliced beef on a sesame seed baguette from local Toronto favourite Circles and Squares.
                 White american cheese. Sharp cheddar. Six hour caramelized onions. No compromises.
               </p>
