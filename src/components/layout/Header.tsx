@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
-export default function Header() {
+export default function Header({ ordersOpen = false }: { ordersOpen?: boolean }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
@@ -79,12 +79,14 @@ export default function Header() {
                 </Link>
               );
             })}
-            <Link
-              href="/order"
-              className="bg-teal text-cream px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide hover:bg-teal-dark transition-colors duration-200 shrink-0"
-            >
-              Order Now
-            </Link>
+            {ordersOpen && (
+              <Link
+                href="/order"
+                className="bg-teal text-cream px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide hover:bg-teal-dark transition-colors duration-200 shrink-0"
+              >
+                Order Now
+              </Link>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -146,14 +148,16 @@ export default function Header() {
                   </Link>
                 );
               })}
-              <div className="pt-3 mt-1 border-t border-cream-dark">
-                <Link
-                  href="/order"
-                  className="inline-block bg-teal text-cream px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide hover:bg-teal-dark transition-colors text-center"
-                >
-                  Order Now
-                </Link>
-              </div>
+              {ordersOpen && (
+                <div className="pt-3 mt-1 border-t border-cream-dark">
+                  <Link
+                    href="/order"
+                    className="inline-block bg-teal text-cream px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide hover:bg-teal-dark transition-colors text-center"
+                  >
+                    Order Now
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         )}

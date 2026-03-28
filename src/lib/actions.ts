@@ -54,6 +54,7 @@ export async function setOrdersOpen(input: { open: boolean }) {
 
   revalidatePath("/admin");
   revalidatePath("/order");
+  revalidatePath("/", "layout");
 }
 
 export async function submitCateringInquiry(input: {

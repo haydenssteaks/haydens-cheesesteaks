@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Footer() {
+export default function Footer({ ordersOpen = false }: { ordersOpen?: boolean }) {
   return (
     <footer className="bg-teal text-cream">
       <div className="checker-strip-cream bg-teal" />
@@ -25,7 +25,7 @@ export default function Footer() {
               <ul className="space-y-3">
                 {[
                   { href: "/menu", label: "Menu" },
-                  { href: "/order", label: "Order Now" },
+                  ...(ordersOpen ? [{ href: "/order", label: "Order Now" }] : []),
                   { href: "/events", label: "Events" },
                   { href: "/catering", label: "Catering" },
                   { href: "/our-story", label: "Our Story" },

@@ -1,17 +1,10 @@
 import { createClient } from "@/lib/supabase/server";
+import { getOrdersOpen } from "@/lib/orders";
 import OrderPageClient from "./OrderPageClient";
 
 export default async function OrderPage() {
   const supabase = await createClient();
-
-  // Check if orders are open
-  const { data: setting } = await supabase
-    .from("settings")
-    .select("value")
-    .eq("key", "orders_open")
-    .single();
-
-  const ordersOpen = setting?.value === "true";
+  const ordersOpen = await getOrdersOpen();
 
   // Fetch menu items from database
   const { data: menuItems } = await supabase

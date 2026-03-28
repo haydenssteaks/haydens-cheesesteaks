@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
+import { getOrdersOpen } from "@/lib/orders";
 
-export default function Home() {
+export default async function Home() {
+  const ordersOpen = await getOrdersOpen();
   return (
     <>
       {/* Hero — Full-bleed food photography with overlay */}
@@ -24,29 +26,28 @@ export default function Home() {
                 alt="Hayden's Cheesesteaks logo"
                 width={320}
                 height={320}
-                className="w-44 h-44 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-2xl shadow-2xl object-cover ring-2 ring-cream/20"
+                className="w-[200px] h-[200px] rounded-2xl shadow-2xl object-cover ring-2 ring-cream/20"
                 priority
               />
             </div>
             {/* Copy */}
             <div className="text-center md:text-left">
-              <h1 className="font-script text-4xl md:text-5xl lg:text-6xl text-cream leading-tight mb-2">
-                Hayden&apos;s Cheesesteaks
-              </h1>
-              <p className="font-display text-lg md:text-xl lg:text-2xl text-cream/80 italic mb-4 leading-snug">
+              <p className="font-script text-4xl md:text-5xl lg:text-6xl text-cream/80 font-bold mb-4 leading-snug">
                 Toronto&apos;s Signature Cheesesteak
               </p>
-              <p className="text-cream/55 text-sm md:text-base max-w-lg leading-relaxed mb-8">
+              <p className="text-cream/80 text-sm md:text-base max-w-lg leading-relaxed mb-8">
                 Premium hand-sliced beef on a sesame seed baguette from local Toronto favourite Circles and Squares.
                 White american cheese. Sharp cheddar. Six hour caramelized onions. No compromises.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
-                <Link
-                  href="/order"
-                  className="bg-cream text-teal px-8 py-3.5 rounded-full font-semibold text-sm tracking-wide hover:bg-white transition-colors duration-200 text-center"
-                >
-                  Order Now
-                </Link>
+                {ordersOpen && (
+                  <Link
+                    href="/order"
+                    className="bg-cream text-teal px-8 py-3.5 rounded-full font-semibold text-sm tracking-wide hover:bg-white transition-colors duration-200 text-center"
+                  >
+                    Order Now
+                  </Link>
+                )}
                 <Link
                   href="/our-story"
                   className="border border-cream/30 text-cream px-8 py-3.5 rounded-full font-semibold text-sm tracking-wide hover:bg-cream/10 transition-colors duration-200 text-center"

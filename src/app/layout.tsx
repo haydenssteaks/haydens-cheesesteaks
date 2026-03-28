@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { getOrdersOpen } from "@/lib/orders";
 
 export const metadata: Metadata = {
   title: {
@@ -50,11 +51,13 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://haydenscheesesteaks.com"),
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const ordersOpen = await getOrdersOpen();
+
   return (
     <html lang="en" className="h-full antialiased">
       <head>
@@ -70,9 +73,9 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col">
-        <Header />
+        <Header ordersOpen={ordersOpen} />
         <main className="flex-1">{children}</main>
-        <Footer />
+        <Footer ordersOpen={ordersOpen} />
       </body>
     </html>
   );
