@@ -11,9 +11,6 @@ export default function Footer({ ordersOpen = false }: { ordersOpen?: boolean })
           <p className="font-script text-4xl md:text-5xl lg:text-6xl text-cream max-w-xl mx-auto">
             Made with love by proud Canadian Eagles fans.
           </p>
-          <p className="font-script text-4xl md:text-5xl lg:text-6xl text-cream max-w-xl mx-auto mt-6">
-            Go Birds!
-          </p>
         </div>
 
         {/* Links & Connect (left) + Hero image (right) */}
