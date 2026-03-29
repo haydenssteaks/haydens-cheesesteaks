@@ -4,7 +4,7 @@ export default async function AdminOrdersPage() {
   const supabase = await createClient();
   const { data: orders } = await supabase
     .from("orders")
-    .select("id, customer_name, customer_email, total_cents, status, created_at, events(venue_name, event_date)")
+    .select("id, order_number, customer_name, customer_email, total_cents, status, created_at, events(venue_name, event_date)")
     .order("created_at", { ascending: false });
 
   return (
@@ -37,8 +37,12 @@ export default async function AdminOrdersPage() {
                 return (
                   <tr key={order.id} className="border-b border-cream-dark last:border-0 hover:bg-cream/30">
                     <td className="px-6 py-4">
-                      <p className="font-semibold text-charcoal text-sm">{order.customer_name}</p>
-                      <p className="text-charcoal/60 text-xs">{order.customer_email}</p>
+                      <div className="flex items-center gap-2">
+                        <span className="inline-block bg-teal/10 text-teal text-xs font-bold px-2 py-0.5 rounded">#{order.order_number}</span>
+                        <p className="font-semibold text-charcoal text-sm">{order.customer_name}</p>
+                      </div>
+                      <p className="text-charcoal/60 text-xs mt-0.5">{order.customer_email}</p>
+                      <p className="text-charcoal/30 text-[10px] font-mono mt-0.5">{order.id}</p>
                     </td>
                     <td className="px-6 py-4 text-sm text-charcoal/80">
                       {event?.venue_name ?? "—"}
